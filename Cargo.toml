@@ -1,0 +1,19 @@
+[package]
+name = "opensound"
+authors = ["29 <791603901@qq.com>"]
+version = "0.0.1"
+license = "MIT/Apache-2.0"
+readme = "README.md"
+keywords = ["audio", "midi", "music", "sound", "daw", "api"]
+categories = ["multimedia", "multimedia::audio"]
+repository = "https://gitlab.com/opensound-org/opensound"
+homepage = "https://opensound.run"
+documentation = "https://docs.rs/opensound"
+description = """
+OpenSound API Server.
+"""
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
