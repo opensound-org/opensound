@@ -159,19 +159,19 @@ pub mod emit {
 
         match level {
             TraceLevel::Trace => {
-                tracing::trace!(target: "ostp", utc = utc(), module, source, message, payload = payload())
+                tracing::trace!(target: "ostp", message, module, source, utc = utc(), payload = payload())
             }
             TraceLevel::Debug => {
-                tracing::debug!(target: "ostp", utc = utc(), module, source, message, payload = payload())
+                tracing::debug!(target: "ostp", message, module, source, utc = utc(), payload = payload())
             }
             TraceLevel::Info => {
-                tracing::info!(target: "ostp", utc = utc(), module, source, message, payload = payload())
+                tracing::info!(target: "ostp", message, module, source, utc = utc(), payload = payload())
             }
             TraceLevel::Warn => {
-                tracing::warn!(target: "ostp", utc = utc(), module, source, message, payload = payload())
+                tracing::warn!(target: "ostp", message, module, source, utc = utc(), payload = payload())
             }
             TraceLevel::Error => {
-                tracing::error!(target: "ostp", utc = utc(), module, source, message, payload = payload())
+                tracing::error!(target: "ostp", message, module, source, utc = utc(), payload = payload())
             }
         }
     }
