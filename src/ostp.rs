@@ -1,4 +1,6 @@
-#[derive(Debug)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Deserialize, Serialize)]
 pub enum TraceLevel {
     Trace,
     Debug,
@@ -7,7 +9,7 @@ pub enum TraceLevel {
     Error,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct TraceData {
     level: TraceLevel,
     module: String,
@@ -16,35 +18,139 @@ pub struct TraceData {
     payload: Option<String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct EventData {
-    _module: String,
-    _source: String,
-    _payload: String,
+    module: String,
+    source: String,
+    payload: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 pub enum Tracing {
     Trace(TraceData),
     Event(EventData),
 }
 
-pub fn emit(tracing: Tracing) {
-    match tracing {
-        Tracing::Trace(data) => {
-            let module = data.module.as_str();
-            let source = data.source.as_ref();
-            let message = data.message.as_str();
-            let payload = data.payload.as_ref();
+pub mod emit {
+    use super::TraceLevel;
+    use serde::Serialize;
 
-            match data.level {
-                TraceLevel::Trace => tracing::trace!(module, source, message, payload),
-                TraceLevel::Debug => tracing::debug!(module, source, message, payload),
-                TraceLevel::Info => tracing::info!(module, source, message, payload),
-                TraceLevel::Warn => tracing::warn!(module, source, message, payload),
-                TraceLevel::Error => tracing::error!(module, source, message, payload),
+    pub fn trace<T: Serialize>(
+        module: &str,
+        source: Option<&str>,
+        message: &str,
+        payload: Option<T>,
+        timestamp: bool,
+    ) {
+        emit(
+            TraceLevel::Trace,
+            module,
+            source,
+            message,
+            payload,
+            timestamp,
+        );
+    }
+
+    pub fn debug<T: Serialize>(
+        module: &str,
+        source: Option<&str>,
+        message: &str,
+        payload: Option<T>,
+        timestamp: bool,
+    ) {
+        emit(
+            TraceLevel::Debug,
+            module,
+            source,
+            message,
+            payload,
+            timestamp,
+        );
+    }
+
+    pub fn info<T: Serialize>(
+        module: &str,
+        source: Option<&str>,
+        message: &str,
+        payload: Option<T>,
+        timestamp: bool,
+    ) {
+        emit(
+            TraceLevel::Info,
+            module,
+            source,
+            message,
+            payload,
+            timestamp,
+        );
+    }
+
+    pub fn warn<T: Serialize>(
+        module: &str,
+        source: Option<&str>,
+        message: &str,
+        payload: Option<T>,
+        timestamp: bool,
+    ) {
+        emit(
+            TraceLevel::Warn,
+            module,
+            source,
+            message,
+            payload,
+            timestamp,
+        );
+    }
+
+    pub fn error<T: Serialize>(
+        module: &str,
+        source: Option<&str>,
+        message: &str,
+        payload: Option<T>,
+        timestamp: bool,
+    ) {
+        emit(
+            TraceLevel::Error,
+            module,
+            source,
+            message,
+            payload,
+            timestamp,
+        );
+    }
+
+    fn emit<T: Serialize>(
+        level: TraceLevel,
+        module: &str,
+        source: Option<&str>,
+        message: &str,
+        payload: Option<T>,
+        timestamp: bool,
+    ) {
+        let payload = payload.map(|p| serde_json::to_string(&p).unwrap());
+        let utc = if timestamp {
+            Some(serde_json::to_string(&chrono::Utc::now().naive_utc()).unwrap())
+        } else {
+            None
+        };
+
+        match level {
+            TraceLevel::Trace => {
+                tracing::trace!(target: "ostp", utc, module, source, message, payload)
+            }
+            TraceLevel::Debug => {
+                tracing::debug!(target: "ostp", utc, module, source, message, payload)
+            }
+            TraceLevel::Info => {
+                tracing::info!(target: "ostp", utc, module, source, message, payload)
+            }
+            TraceLevel::Warn => {
+                tracing::warn!(target: "ostp", utc, module, source, message, payload)
+            }
+            TraceLevel::Error => {
+                tracing::error!(target: "ostp", utc, module, source, message, payload)
             }
         }
-        Tracing::Event(_) => todo!(),
     }
 }
