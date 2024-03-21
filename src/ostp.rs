@@ -35,6 +35,10 @@ pub mod emit {
     use super::TraceLevel;
     use serde::Serialize;
 
+    pub fn trace(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
+        emit::<()>(TraceLevel::Trace, module, source, message, None, timestamp);
+    }
+
     pub fn trace_payload(
         module: &str,
         source: Option<&str>,
@@ -50,6 +54,10 @@ pub mod emit {
             Some(payload),
             timestamp,
         );
+    }
+
+    pub fn debug(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
+        emit::<()>(TraceLevel::Debug, module, source, message, None, timestamp);
     }
 
     pub fn debug_payload(
@@ -69,6 +77,10 @@ pub mod emit {
         );
     }
 
+    pub fn info(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
+        emit::<()>(TraceLevel::Info, module, source, message, None, timestamp);
+    }
+
     pub fn info_payload(
         module: &str,
         source: Option<&str>,
@@ -86,6 +98,10 @@ pub mod emit {
         );
     }
 
+    pub fn warn(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
+        emit::<()>(TraceLevel::Warn, module, source, message, None, timestamp);
+    }
+
     pub fn warn_payload(
         module: &str,
         source: Option<&str>,
@@ -101,6 +117,10 @@ pub mod emit {
             Some(payload),
             timestamp,
         );
+    }
+
+    pub fn error(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
+        emit::<()>(TraceLevel::Error, module, source, message, None, timestamp);
     }
 
     pub fn error_payload(
