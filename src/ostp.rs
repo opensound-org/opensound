@@ -128,28 +128,30 @@ pub mod emit {
         payload: Option<T>,
         timestamp: bool,
     ) {
-        let payload = payload.map(|p| serde_json::to_string(&p).unwrap());
-        let utc = if timestamp {
-            Some(serde_json::to_string(&chrono::Utc::now().naive_utc()).unwrap())
-        } else {
-            None
+        let payload = || payload.map(|p| serde_json::to_string(&p).unwrap());
+        let utc = || {
+            if timestamp {
+                Some(serde_json::to_string(&chrono::Utc::now().naive_utc()).unwrap())
+            } else {
+                None
+            }
         };
 
         match level {
             TraceLevel::Trace => {
-                tracing::trace!(target: "ostp", utc, module, source, message, payload)
+                tracing::trace!(target: "ostp", utc = utc(), module, source, message, payload = payload())
             }
             TraceLevel::Debug => {
-                tracing::debug!(target: "ostp", utc, module, source, message, payload)
+                tracing::debug!(target: "ostp", utc = utc(), module, source, message, payload = payload())
             }
             TraceLevel::Info => {
-                tracing::info!(target: "ostp", utc, module, source, message, payload)
+                tracing::info!(target: "ostp", utc = utc(), module, source, message, payload = payload())
             }
             TraceLevel::Warn => {
-                tracing::warn!(target: "ostp", utc, module, source, message, payload)
+                tracing::warn!(target: "ostp", utc = utc(), module, source, message, payload = payload())
             }
             TraceLevel::Error => {
-                tracing::error!(target: "ostp", utc, module, source, message, payload)
+                tracing::error!(target: "ostp", utc = utc(), module, source, message, payload = payload())
             }
         }
     }
