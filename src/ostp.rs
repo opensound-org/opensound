@@ -35,11 +35,11 @@ pub mod emit {
     use super::TraceLevel;
     use serde::Serialize;
 
-    pub fn trace<T: Serialize>(
+    pub fn trace_payload(
         module: &str,
         source: Option<&str>,
         message: &str,
-        payload: Option<T>,
+        payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
@@ -47,16 +47,16 @@ pub mod emit {
             module,
             source,
             message,
-            payload,
+            Some(payload),
             timestamp,
         );
     }
 
-    pub fn debug<T: Serialize>(
+    pub fn debug_payload(
         module: &str,
         source: Option<&str>,
         message: &str,
-        payload: Option<T>,
+        payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
@@ -64,16 +64,16 @@ pub mod emit {
             module,
             source,
             message,
-            payload,
+            Some(payload),
             timestamp,
         );
     }
 
-    pub fn info<T: Serialize>(
+    pub fn info_payload(
         module: &str,
         source: Option<&str>,
         message: &str,
-        payload: Option<T>,
+        payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
@@ -81,16 +81,16 @@ pub mod emit {
             module,
             source,
             message,
-            payload,
+            Some(payload),
             timestamp,
         );
     }
 
-    pub fn warn<T: Serialize>(
+    pub fn warn_payload(
         module: &str,
         source: Option<&str>,
         message: &str,
-        payload: Option<T>,
+        payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
@@ -98,16 +98,16 @@ pub mod emit {
             module,
             source,
             message,
-            payload,
+            Some(payload),
             timestamp,
         );
     }
 
-    pub fn error<T: Serialize>(
+    pub fn error_payload(
         module: &str,
         source: Option<&str>,
         message: &str,
-        payload: Option<T>,
+        payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
@@ -115,7 +115,7 @@ pub mod emit {
             module,
             source,
             message,
-            payload,
+            Some(payload),
             timestamp,
         );
     }
