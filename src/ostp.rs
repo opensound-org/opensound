@@ -12,9 +12,9 @@ pub enum TraceLevel {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TraceData {
     level: TraceLevel,
+    message: String,
     module: String,
     source: Option<String>,
-    message: String,
     payload: Option<String>,
 }
 
