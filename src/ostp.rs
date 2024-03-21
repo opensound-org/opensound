@@ -35,106 +35,106 @@ pub mod emit {
     use super::TraceLevel;
     use serde::Serialize;
 
-    pub fn trace(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
-        emit::<()>(TraceLevel::Trace, module, source, message, None, timestamp);
+    pub fn trace(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
+        emit::<()>(TraceLevel::Trace, message, module, source, None, timestamp);
     }
 
     pub fn trace_payload(
+        message: &str,
         module: &str,
         source: Option<&str>,
-        message: &str,
         payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
             TraceLevel::Trace,
+            message,
             module,
             source,
-            message,
             Some(payload),
             timestamp,
         );
     }
 
-    pub fn debug(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
-        emit::<()>(TraceLevel::Debug, module, source, message, None, timestamp);
+    pub fn debug(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
+        emit::<()>(TraceLevel::Debug, message, module, source, None, timestamp);
     }
 
     pub fn debug_payload(
+        message: &str,
         module: &str,
         source: Option<&str>,
-        message: &str,
         payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
             TraceLevel::Debug,
+            message,
             module,
             source,
-            message,
             Some(payload),
             timestamp,
         );
     }
 
-    pub fn info(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
-        emit::<()>(TraceLevel::Info, module, source, message, None, timestamp);
+    pub fn info(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
+        emit::<()>(TraceLevel::Info, message, module, source, None, timestamp);
     }
 
     pub fn info_payload(
+        message: &str,
         module: &str,
         source: Option<&str>,
-        message: &str,
         payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
             TraceLevel::Info,
+            message,
             module,
             source,
-            message,
             Some(payload),
             timestamp,
         );
     }
 
-    pub fn warn(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
-        emit::<()>(TraceLevel::Warn, module, source, message, None, timestamp);
+    pub fn warn(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
+        emit::<()>(TraceLevel::Warn, message, module, source, None, timestamp);
     }
 
     pub fn warn_payload(
+        message: &str,
         module: &str,
         source: Option<&str>,
-        message: &str,
         payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
             TraceLevel::Warn,
+            message,
             module,
             source,
-            message,
             Some(payload),
             timestamp,
         );
     }
 
-    pub fn error(module: &str, source: Option<&str>, message: &str, timestamp: bool) {
-        emit::<()>(TraceLevel::Error, module, source, message, None, timestamp);
+    pub fn error(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
+        emit::<()>(TraceLevel::Error, message, module, source, None, timestamp);
     }
 
     pub fn error_payload(
+        message: &str,
         module: &str,
         source: Option<&str>,
-        message: &str,
         payload: impl Serialize,
         timestamp: bool,
     ) {
         emit(
             TraceLevel::Error,
+            message,
             module,
             source,
-            message,
             Some(payload),
             timestamp,
         );
@@ -142,9 +142,9 @@ pub mod emit {
 
     fn emit<T: Serialize>(
         level: TraceLevel,
+        message: &str,
         module: &str,
         source: Option<&str>,
-        message: &str,
         payload: Option<T>,
         timestamp: bool,
     ) {
