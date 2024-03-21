@@ -176,3 +176,26 @@ pub mod emit {
         }
     }
 }
+
+use tracing_subscriber::fmt::{format::FmtSpan, time::ChronoLocal};
+
+#[cfg(debug_assertions)]
+pub fn install_default() {
+    tracing_subscriber::fmt()
+        .with_ansi(false)
+        .with_timer(ChronoLocal::new("%m-%d %H:%M:%S".into()))
+        .with_max_level(tracing::Level::DEBUG)
+        .with_span_events(FmtSpan::FULL)
+        .with_thread_names(true)
+        .init();
+}
+
+#[cfg(not(debug_assertions))]
+pub fn install_default() {
+    tracing_subscriber::fmt()
+        .with_ansi(false)
+        .with_timer(ChronoLocal::new("%m-%d %H:%M:%S".into()))
+        .with_span_events(FmtSpan::FULL)
+        .with_thread_names(true)
+        .init();
+}
