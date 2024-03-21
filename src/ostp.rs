@@ -151,7 +151,7 @@ pub mod emit {
         let payload = || payload.map(|p| serde_json::to_string(&p).unwrap());
         let utc = || {
             if timestamp {
-                Some(serde_json::to_string(&chrono::Utc::now().naive_utc()).unwrap())
+                Some(format!("{:?}", chrono::Utc::now().naive_utc()))
             } else {
                 None
             }
