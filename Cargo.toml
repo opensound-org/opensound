@@ -1,16 +1,22 @@
 [package]
 name = "opensound"
 authors = ["29 <791603901@qq.com>"]
-version = "0.0.1"
+version = "0.0.2"
 license = "MIT/Apache-2.0"
 readme = "README.md"
 keywords = ["audio", "midi", "music", "sound", "daw"]
-categories = ["multimedia", "multimedia::audio"]
+categories = [
+    "multimedia",
+    "multimedia::audio",
+    "network-programming",
+    "web-programming::http-server",
+    "web-programming::websocket"
+]
 repository = "https://gitlab.com/opensound-org/opensound"
 homepage = "https://opensound.run"
 documentation = "https://docs.rs/opensound"
 description = """
-OpenSound API Server.
+OpenSound is a One-Stop Multi-Level SoundSystem Abstraction, suitable for being a foundation for Pro-Audio Applications(e.g. a DAW) or other sound related apps.
 """
 edition = "2021"
 
