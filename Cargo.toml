@@ -16,7 +16,7 @@ repository = "https://gitlab.com/opensound-org/opensound"
 homepage = "https://opensound.run"
 documentation = "https://docs.rs/opensound"
 description = """
-OpenSound is a One-Stop Multi-Level SoundSystem Abstraction, suitable for being a foundation for Pro-Audio Applications(e.g. a DAW) or other sound related apps.
+(WIP)OpenSound is a One-Stop Multi-Level SoundSystem Abstraction, suitable for being a foundation for Pro-Audio Applications(e.g. a DAW) or other sound related apps.
 """
 edition = "2021"
 
