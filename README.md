@@ -1,6 +1,12 @@
 # opensound
 
+English | [简体中文](README-CN.md)
+
 This is the OpenSound Project's Mono Repo.
+
+[Website](https://opensound.run) | [crates.io](https://crates.io/crates/opensound) | [docs.rs](https://docs.rs/opensound/latest/opensound)
+
+Latest version: [v0.0.3](https://gitlab.com/opensound-org/opensound/-/tree/0.0.3?ref_type=tags)
 
 ## What
 OpenSound is a (currently WIP and in early development stage) OpenSource One-Stop Multi-Level SoundSystem Abstraction written in Rust, suitable for being a solid foundation for [Pro-Audio](https://en.wikipedia.org/wiki/Professional_audio) Applications(e.g. a [DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)) or other sound related apps.
@@ -21,6 +27,19 @@ In the future(after MVP), our roadmap will be:
 - WASM support
 - OpenSound Native Playground(using Flutter & opensound's C API)
 - Game Audio functionalities & Game Engines(like Unity/Unreal/Godot) integration
+
+## Install
+You can:
+```
+cargo install opensound
+```
+if you just want to try this project out, or want to use the pre-built Web API Server directly.
+
+Or you can:
+```
+cargo add opensound
+```
+if you prefer to use the underlying Rust API.
 
 ## Why
 1. As you can see, in the C++ ecosystem, there is a one-stop audio development framework like [JUCE](https://juce.com/), as well as a DAW audio engine like [tracktion_engine](https://github.com/Tracktion/tracktion_engine), but they all have various flaws (at least my own experience using them is very poor in many places), and they are C++(🤮). But in the Rust ecosystem, the distribution of audio crates are highly fragmented, lacking a unified solution, and many crates lack good maintenance, so I plan to write one myself. You can think this project as the [RIIR](https://github.com/ansuz/RIIR) version of JUCE + trackion_engine (but not quite, because the API of this project will be very different from theirs, it will be more elegant).
