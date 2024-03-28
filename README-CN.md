@@ -6,6 +6,8 @@
 
 [官网](https://opensound.run) | [crates.io](https://crates.io/crates/opensound) | [docs.rs](https://docs.rs/opensound/latest/opensound)
 
+原始作者：[@czy-29](https://github.com/czy-29)
+
 最新版本：[v0.0.4](https://gitlab.com/opensound-org/opensound/-/tree/0.0.4?ref_type=tags)
 
 ## 是什么
@@ -42,7 +44,7 @@ cargo add opensound
 如果您更想使用底层的Rust API。
 
 ## 为什么
-1. 正如您所见，在C++生态中，有像[JUCE](https://juce.com/)这样的一站式音频开发框架，也有像[tracktion_engine](https://github.com/Tracktion/tracktion_engine)这样的DAW音频引擎，但它们都存在各种各样的缺陷（至少我自己的使用体验在很多地方都很差），而且它们是 C++（🤮）。然而在 Rust 生态中，音频crate的分布又高度碎片化，缺少一个“大一统”的解决方案，而且很多crate缺少良好的维护，所以我打算自己写一个。你可以把这个项目看成是JUCE + trackion_engine的[RIIR](https://github.com/ansuz/RIIR)版本（但不完全是，因为这个项目的API会和它们的有很大不同，会更优雅）。
+1. 正如您所见，在C++生态中，有像[JUCE](https://juce.com/)这样的一站式音频开发框架，也有像[tracktion_engine](https://github.com/Tracktion/tracktion_engine)这样的DAW音频引擎，但它们都存在各种各样的缺陷（至少我自己的使用体验在很多地方都很差），而且它们是 C++（🤮）。然而在 Rust 生态中，音频crate的分布又高度碎片化，缺少一个“大一统”的解决方案，而且很多crate缺少良好的维护，所以我打算自己写一个。你可以把这个项目看成是JUCE + trackion_engine的[RIIR](https://github.com/ansuz/RIIR)版本（但不完全是，因为这个项目的API会和它们的有很大不同，会更优雅。同时本项目的API不会包含GUI模块，强制您实践一种更现代的，前后端解耦合并且严格隔离的架构）。
 2. 我正在开发一个自己的DAW（但DAW本身将是一个商业闭源项目）。我知道在2024年从头开始写一个新的DAW听起来像是一个笑话，所以我打算毫无保留地全面开源音频后端（也就是这个项目），引入社区力量，大家开源共创。同时，DAW前端的闭源也可以保留商业化空间，让这个项目可以获得资金来持续发展。因此，总的来说，这个项目的完整形态实际上是一个“[OpenCore](https://en.wikipedia.org/wiki/Open-core_model)”项目。本项目是这个开源的“核心”，而DAW（暂定名为OpenSound Studio）则是其闭源的部分。
 3. 为了最大化本项目的采用率，我们将在最早期就封装一个Web API Server，允许哪怕不使用Rust的任何开发者，甚至在C API暴露之前就可以使用自己的语言调用本项目——只需要您的语言可以发送HTTP/WebSocket请求。这也形成了一种前后端“进程隔离”的架构，允许任何人使用任何框架来开发自己的前端，使得开发自定义前端变得更容易。
 4. 我自己本身也是一名半职业音乐人。在给自己的音乐编曲的过程中，我发现了很多我希望拥有，但当前市面上的DAW都没有的功能，这也是我最终决定开发一个自己的DAW的其中一个原因。而且很多这些功能我都会实现在这个开源核心上，这就意味着本项目将会有很多创新的音频功能。所以敬请期待！
