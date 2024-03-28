@@ -8,7 +8,7 @@ This is the OpenSound Project's Mono Repo.
 
 Original Author: [@czy-29](https://github.com/czy-29)
 
-Latest version: [v0.0.4](https://gitlab.com/opensound-org/opensound/-/tree/0.0.4?ref_type=tags)
+Latest version: [v0.0.5](https://gitlab.com/opensound-org/opensound/-/tree/0.0.5?ref_type=tags)
 
 ## What
 OpenSound is a (currently WIP and in early development stage) OpenSource One-Stop Multi-Level SoundSystem Abstraction written in Rust, suitable for being a solid foundation for [Pro-Audio](https://en.wikipedia.org/wiki/Professional_audio) Applications(e.g. a [DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)) or other sound related apps.
