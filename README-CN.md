@@ -18,7 +18,7 @@ OpenSound是使用Rust开发的，一站式多层级的开源声音系统抽象�
 - 一个Web API Server
 - 一个内置的Web GUI Playground
 
-内置的Web GUI Playground将主要用于探索&测试&[Live Coding](https://en.wikipedia.org/wiki/Live_coding)用途，但是当然，您也可以用它来进行编曲/音乐制作，只是如果您仅使用Playground的交互前端的话，您的工作流将会比较繁杂（比如Playground可能并不会有一个完整的钢琴卷帘）。
+内置的Web GUI Playground将主要用于探索&测试&[Live Coding](https://en.wikipedia.org/wiki/Live_coding)用途（它的形态会比较像JUCE的DemoRunner和AudioPluginHost，以及本项目的一些特色功能的结合体），但是当然，您也可以用它来进行编曲/音乐制作，只是如果您仅使用Playground的交互前端的话，您的工作流将会比较繁杂（比如Playground可能并不会有一个完整的钢琴卷帘）。
 
 但是现在，我们目前正在专注于0.1版本，它将是一个[PoC](https://en.wikipedia.org/wiki/Proof_of_concept)版本。
 PoC版本和MVP版本的主要区别在于，PoC版本不会有Web GUI Playground，取而代之的是一个用于测试和Live Coding演示的命令行“[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)脚本控制台”。
