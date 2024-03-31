@@ -57,6 +57,11 @@ cargo add opensound
 ```
 如果您更想使用底层的Rust API。
 
+## Rust版本策略
+作为官方，我们始终使用最新稳定版的Rust（当前是1.77.1）来构建和测试本项目。但是任何高于[Cargo.toml](Cargo.toml)中指定的[MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field)（当前是1.64.0，因为 `cargo-zigbuild` 的 `universal2-apple-darwin` target需要它）的Rust版本，均应正常构建，但是行为是否正确，官方不予保证。
+
+如果您使用低于最新稳定版的Rust构建本项目后，遇到一些问题，请先尝试升级到最新稳定版的Rust之后，再来看看问题是否依然存在。如果问题依然存在，请到[GitLab](https://gitlab.com/opensound-org/opensound/-/issues)或[Github](https://github.com/opensound-org/opensound/issues)发起issue。
+
 ## 为什么
 1. 正如您所见，在C++生态中，有像[JUCE](https://juce.com/)这样的一站式音频开发框架，也有像[tracktion_engine](https://github.com/Tracktion/tracktion_engine)这样的DAW音频引擎，但它们都存在各种各样的缺陷（至少我自己的使用体验在很多地方都很差），而且它们是 C++（🤮）。然而在 Rust 生态中，音频crate的分布又高度碎片化，缺少一个“大一统”的解决方案，而且很多crate缺少良好的维护，所以我打算自己写一个。你可以把这个项目看成是JUCE + trackion_engine的[RIIR](https://github.com/ansuz/RIIR)版本（但不完全是，因为这个项目的API会和它们的有很大不同，会更优雅。同时本项目的API不会包含GUI模块，强制您实践一种更现代的，前后端解耦合并且严格隔离的架构）。
 2. 我正在开发一个自己的DAW（但DAW本身将是一个商业闭源项目）。我知道在2024年从头开始写一个新的DAW听起来像是一个笑话，所以我打算毫无保留地全面开源音频后端（也就是这个项目），引入社区力量，大家开源共创。同时，DAW前端的闭源也可以保留商业化空间，让这个项目可以获得资金来持续发展。因此，总的来说，这个项目的完整形态实际上是一个“[OpenCore](https://en.wikipedia.org/wiki/Open-core_model)”项目。本项目是这个开源的“核心”，而DAW（暂定名为OpenSound Studio）则是其闭源的部分。
