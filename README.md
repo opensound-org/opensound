@@ -31,13 +31,24 @@ In the future(after MVP), our roadmap will be:
 - Game Audio functionalities & Game Engines(like Unity/Unreal/Godot) integration
 
 ## Install
-You can:
+### Binary usage:
+If you just want to try this project out, or want to use the pre-built Web API Server directly, you can:
 ```
 cargo install opensound
 ```
-if you just want to try this project out, or want to use the pre-built Web API Server directly.
+Alternatively, if you do not have Rust installed or do not wish to use `cargo install`, you can download the pre-built binary directly from [Github Releases](https://github.com/opensound-org/opensound/releases) (macOS and Linux versions may require you to run `chmod +x` on the binary before execution).
 
-Or you can:
+#### Reproduce pre-built binary in Github Release:
+The Windows version can be built directly by executing `cargo build --release` under the MSVC toolchain (which is the default toolchain under Windows machines).
+
+For macOS and Linux versions, in order for the build to run across OS distributions, we used "[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)". So please refer to their guide first to correctly install cargo-zigbuild (including correctly installing zig and adding Rust targets).
+
+Then the macOS version can be built by running `cargo zigbuild --target universal2-apple-darwin --release` (requires a machine with macOS 11.0 or higher).
+
+The Linux version can be cross-compiled and built on any Windows 10+/macOS 10.12+/Linux (kernel 3.2+, glibc 2.17+) machine by running: `cargo zigbuild --target x86_64-unknown-linux-gnu --release`.
+
+### Library usage:
+You can:
 ```
 cargo add opensound
 ```
