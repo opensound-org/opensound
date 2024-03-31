@@ -56,6 +56,9 @@ cargo add opensound
 ```
 if you prefer to use the underlying Rust API.
 
+## Branch Model
+This project adopts a "[centralized workflow](https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows)", which means there is only one single "main" branch, and all work is carried out on this branch. When each version is released, a tag for the current version will be created, and you can checkout a specific tag to obtain the complete code for the corresponding version. If you find a bug in a historical version, you need to first upgrade to the latest version to check if the bug still exists. If it still exists, please initiate an issue at [GitLab](https://gitlab.com/opensound-org/opensound/-/issues) or [Github](https://github.com/opensound-org/opensound/issues) and wait for the next version to fix it. We do not currently provide [hotfix](https://en.wikipedia.org/wiki/Hotfix) support for historical versions (due to limited human bandwidth).
+
 ## Rust Version Policy
 As an official, we always use the latest stable version of Rust (currently 1.77.1) to build and test this project. However, any version of Rust that is higher than the [MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field) specified in [Cargo.toml](Cargo.toml) (currently 1.64.0, as it is required for the `cargo-zigbuild`'s `universal2-apple-darwin` target) should be built normally, but the official does not guarantee the correctness of the behavior.
 
