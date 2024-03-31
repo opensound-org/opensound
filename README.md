@@ -2,7 +2,7 @@
 
 English | [简体中文](README-CN.md)
 
-This is the OpenSound Project's Mono Repo.
+This is the OpenSound Project's [Monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 [Website](https://opensound.run) | [crates.io](https://crates.io/crates/opensound) | [docs.rs](https://docs.rs/opensound/latest/opensound)
 

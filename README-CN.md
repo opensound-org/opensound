@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-这里是OpenSound项目的单体仓库（monorepo）
+这里是OpenSound项目的[单体仓库](https://en.wikipedia.org/wiki/Monorepo)。
 
 [官网](https://opensound.run) | [crates.io](https://crates.io/crates/opensound) | [docs.rs](https://docs.rs/opensound/latest/opensound)
 
