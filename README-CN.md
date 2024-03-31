@@ -38,8 +38,11 @@ cargo install opensound
 ```
 或者如果您没有安装Rust或者您不想使用`cargo install`，您也可以直接从[Github Releases](https://github.com/opensound-org/opensound/releases)下载预构建的二进制（macOS和Linux版本在执行前可能需要您先给二进制运行一下`chmod +x`）。
 
-#### 复现Github Release中的预构建二进制：
-Windows版本直接在msvc工具链（也就是Windows机器下的默认工具链）下执行 `cargo build --release` 即可构建。
+#### 复现[Github Release](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)中的预构建二进制：
+
+首先：`git checkout v0.0.6`
+
+然后Windows版本直接在msvc工具链（也就是Windows机器下的默认工具链）下执行 `cargo build --release` 即可构建。
 
 对于macOS和Linux版本，为了使构建制品可以跨OS发行版运行，我们使用了“[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)”。所以请先参阅他们的指南以正确安装cargo-zigbuild（包含正确安装zig，以及添加Rust targets）。
 

@@ -38,8 +38,11 @@ cargo install opensound
 ```
 Alternatively, if you do not have Rust installed or do not wish to use `cargo install`, you can download the pre-built binary directly from [Github Releases](https://github.com/opensound-org/opensound/releases) (macOS and Linux versions may require you to run `chmod +x` on the binary before execution).
 
-#### Reproduce pre-built binary in Github Release:
-The Windows version can be built directly by executing `cargo build --release` under the MSVC toolchain (which is the default toolchain under Windows machines).
+#### Reproduce pre-built binary in [Github Release](https://github.com/opensound-org/opensound/releases/tag/v0.0.6):
+
+First: `git checkout v0.0.6`
+
+Then, the Windows version can be built directly by executing `cargo build --release` under the MSVC toolchain (which is the default toolchain under Windows machines).
 
 For macOS and Linux versions, in order for the build to run across OS distributions, we used "[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)". So please refer to their guide first to correctly install cargo-zigbuild (including correctly installing zig and adding Rust targets).
 
