@@ -40,15 +40,14 @@ Alternatively, if you do not have Rust installed or do not wish to use `cargo in
 
 #### Reproduce pre-built binary in [Github Release](https://github.com/opensound-org/opensound/releases/tag/v0.0.6):
 
-First: `git checkout v0.0.6`
+At present, the entire release process is purely manual, but in the future, we plan to use Github Actions to automate the entire process.
 
-Then, the Windows version can be built directly by executing `cargo build --release` under the MSVC toolchain (which is the default toolchain under Windows machines).
-
-For macOS and Linux versions, in order for the build to run across OS distributions, we used "[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)". So please refer to their guide first to correctly install cargo-zigbuild (including correctly installing zig and adding Rust targets).
-
-Then the macOS version can be built by running `cargo zigbuild --target universal2-apple-darwin --release` (requires a machine with macOS 11.0 or higher).
-
-The Linux version can be cross-compiled and built on any Windows 10+/macOS 10.12+/Linux (kernel 3.2+, glibc 2.17+) machine by running: `cargo zigbuild --target x86_64-unknown-linux-gnu --release`.
+The following steps describe the method of manually building binaries in Github Release:
+- First: `git checkout v0.0.6`
+- Then, the Windows version can be built directly by executing `cargo build --release` under the MSVC toolchain (which is the default toolchain under Windows machines).
+- For macOS and Linux versions, in order for the build to run across OS distributions, we used "[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)". So please refer to their guide first to correctly install cargo-zigbuild (including correctly installing zig and adding Rust targets).
+- Then the macOS version can be built by running `cargo zigbuild --target universal2-apple-darwin --release` (requires a machine with macOS 11.0 or higher).
+- The Linux version can be cross-compiled and built on any Windows 10+/macOS 10.12+/Linux (kernel 3.2+, glibc 2.17+) machine by running: `cargo zigbuild --target x86_64-unknown-linux-gnu --release`.
 
 ### Library usage:
 You can:

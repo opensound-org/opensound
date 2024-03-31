@@ -40,15 +40,14 @@ cargo install opensound
 
 #### 复现[Github Release](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)中的预构建二进制：
 
-首先：`git checkout v0.0.6`
+目前，整个发布过程是纯手动完成的，但未来计划使用Github Actions将整个过程自动化。
 
-然后Windows版本直接在msvc工具链（也就是Windows机器下的默认工具链）下执行 `cargo build --release` 即可构建。
-
-对于macOS和Linux版本，为了使构建制品可以跨OS发行版运行，我们使用了“[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)”。所以请先参阅他们的指南以正确安装cargo-zigbuild（包含正确安装zig，以及添加Rust targets）。
-
-然后macOS版本可以通过运行 `cargo zigbuild --target universal2-apple-darwin --release` 来构建（需要macOS 11.0以上的机子）。
-
-Linux版本可以在任何Windows 10+/macOS 10.12+/Linux（内核3.2+，glibc 2.17+）机子上，通过运行 `cargo zigbuild --target x86_64-unknown-linux-gnu --release` 来交叉编译构建。
+以下步骤描述了手动构建Github Release中的二进制的方法：
+- 首先：`git checkout v0.0.6`
+- 然后Windows版本直接在msvc工具链（也就是Windows机器下的默认工具链）下执行 `cargo build --release` 即可构建。
+- 对于macOS和Linux版本，为了使构建制品可以跨OS发行版运行，我们使用了“[cargo-zigbuild](https://crates.io/crates/cargo-zigbuild)”。所以请先参阅他们的指南以正确安装cargo-zigbuild（包含正确安装zig，以及添加Rust targets）。
+- 然后macOS版本可以通过运行 `cargo zigbuild --target universal2-apple-darwin --release` 来构建（需要macOS 11.0以上的机子）。
+- Linux版本可以在任何Windows 10+/macOS 10.12+/Linux（内核3.2+，glibc 2.17+）机子上，通过运行 `cargo zigbuild --target x86_64-unknown-linux-gnu --release` 来交叉编译构建。
 
 ### 库使用：
 您可以：
