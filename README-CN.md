@@ -59,6 +59,8 @@ cargo add opensound
 ## 分支模型
 本项目采用“[集中式工作流](https://git-scm.com/book/zh/v2/%E5%88%86%E5%B8%83%E5%BC%8F-Git-%E5%88%86%E5%B8%83%E5%BC%8F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B)”，意味着只有一个单一的“main”分支，所有的工作都在本分支上进行。每个版本发布时，会创建一个当前版本的tag，您checkout某一个tag，即可得到相应版本的完整代码。如果您发现某个历史版本存在bug，您需要先升级到最新版本检查bug是否依然存在。如果依然存在，请到[GitLab](https://gitlab.com/opensound-org/opensound/-/issues)或[Github](https://github.com/opensound-org/opensound/issues)发起issue，并等待下个版本的修复。我们暂不对历史版本提供[hotfix](https://en.wikipedia.org/wiki/Hotfix)支持（因为人力带宽有限）。
 
+本项目的版本发布没有固定的周期，但是版本号会遵循[SemVer](https://semver.org/lang/zh-CN/)：在v0.1之后，每个修订版本会仅包含bug修复，而每个小版本会包含小的功能更新，而每个大版本则会包含重大功能更新。
+
 ## Rust版本策略
 作为官方，我们始终使用最新稳定版的Rust（当前是1.77.1）来构建和测试本项目。但是任何高于[Cargo.toml](Cargo.toml)中指定的[MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field)（当前是1.64.0，因为 `cargo-zigbuild` 的 `universal2-apple-darwin` target需要它）的Rust版本，均应正常构建，但是行为是否正确，官方不予保证。
 
