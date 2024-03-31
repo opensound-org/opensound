@@ -66,6 +66,20 @@ cargo add opensound
 
 如果您使用低于最新稳定版的Rust构建本项目后，遇到一些问题，请先尝试升级到最新稳定版的Rust之后，再来看看问题是否依然存在。如果问题依然存在，请到[GitLab](https://gitlab.com/opensound-org/opensound/-/issues)或[Github](https://github.com/opensound-org/opensound/issues)发起issue。
 
+## 平台支持策略
+我们官方维护：
+- x86_64-pc-windows-msvc
+- [universal2-apple-darwin](https://crates.io/crates/cargo-zigbuild)（`x86_64-apple-darwin` 和 `aarch64-apple-darwin` 的组合）
+- x86_64-unknown-linux-gnu
+
+三个target的build。其它target可能也可以工作，但是不做保证。这三个target我们保证可以构建通过，但是对于它们测试的支持程度，这三个target会有差异（同样是由于资源和人力带宽有限）。
+
+首先，我们只有两台Windows 10机器（一台Surface Laptop Studio和一台DELL工作站），和一台macOS Sonoma机器（2023款MacMini，M2芯片），因此Linux平台的测试暂时只能在虚拟机中进行，同时Windows 11的测试无法被覆盖到（Windows 8及以下的系统我们不再支持），另外x86芯片的macOS的测试也无法被覆盖到，以及更多低版本的macOS系统。
+
+因为 [@czy-29](https://github.com/czy-29) 作者个人日常开发会使用Surface Laptop Studio，同时制作音乐时会使用DELL工作站，因此Windows 10平台会有最高等级的支持和质量保证，macOS会进行测试但是因为使用时间不长，且没有专职的测试人员，因此质量可能无法达到Windows 10级别的保证。同时因为Linux只会在虚拟机中进行测试，因此可能有大量的物理机用例场景，是无法被覆盖到的。
+
+当然，除了操作系统以外，还有大量的声卡驱动，以及音频插件的问题，这些显然我们的测试是不可能100%覆盖全的。对于以上提到的所有这些问题，如果您发现了一些bug，我们虽然欢迎您提交issue，但是对于修复，我们只能是尽力而为。对于我们有条件复现的bug，我们一定会修复。但是对于我们实在没有办法复现的环境，我们只能将修复它的优先级降低，也望理解。
+
 ## 为什么
 1. 正如您所见，在C++生态中，有像[JUCE](https://juce.com/)这样的一站式音频开发框架，也有像[tracktion_engine](https://github.com/Tracktion/tracktion_engine)这样的DAW音频引擎，但它们都存在各种各样的缺陷（至少我自己的使用体验在很多地方都很差），而且它们是 C++（🤮）。然而在 Rust 生态中，音频crate的分布又高度碎片化，缺少一个“大一统”的解决方案，而且很多crate缺少良好的维护，所以我打算自己写一个。你可以把这个项目看成是JUCE + trackion_engine的[RIIR](https://github.com/ansuz/RIIR)版本（但不完全是，因为这个项目的API会和它们的有很大不同，会更优雅。同时本项目的API不会包含GUI模块，强制您实践一种更现代的，前后端解耦合并且严格隔离的架构）。
 2. 我正在开发一个自己的DAW（但DAW本身将是一个商业闭源项目）。我知道在2024年从头开始写一个新的DAW听起来像是一个笑话，所以我打算毫无保留地全面开源音频后端（也就是这个项目），引入社区力量，大家开源共创。同时，DAW前端的闭源也可以保留商业化空间，让这个项目可以获得资金来持续发展。因此，总的来说，这个项目的完整形态实际上是一个“[OpenCore](https://en.wikipedia.org/wiki/Open-core_model)”项目。本项目是这个开源的“核心”，而DAW（暂定名为OpenSound Studio）则是其闭源的部分。
