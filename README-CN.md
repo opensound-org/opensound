@@ -23,6 +23,8 @@ OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层�
 但是现在，我们目前正在专注于0.1版本，它将是一个[PoC](https://en.wikipedia.org/wiki/Proof_of_concept)版本。
 PoC版本和MVP版本的主要区别在于，PoC版本不会有Web GUI Playground，取而代之的是一个用于测试和Live Coding演示的命令行“[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)脚本控制台”。
 
+v0.1之前还会有若干个v0.0.x版本，每实现一个小功能都会bump一个新版本。
+
 在未来（MVP之后），我们计划的路线图是：
 - 包装C API，并创建不同语言的绑定（如C++/Python/C#……）
 - 移动端支持（1.0将仅会支持桌面平台）
@@ -59,7 +61,7 @@ cargo add opensound
 ## 分支模型
 本项目采用“[集中式工作流](https://git-scm.com/book/zh/v2/%E5%88%86%E5%B8%83%E5%BC%8F-Git-%E5%88%86%E5%B8%83%E5%BC%8F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B)”，意味着只有一个单一的“main”分支，所有的工作都在本分支上进行。每个版本发布时，会创建一个当前版本的tag，您checkout某一个tag，即可得到相应版本的完整代码。如果您发现某个历史版本存在bug，您需要先升级到最新版本检查bug是否依然存在。如果依然存在，请到[GitLab](https://gitlab.com/opensound-org/opensound/-/issues)或[Github](https://github.com/opensound-org/opensound/issues)发起issue，并等待下个版本的修复。我们暂不对历史版本提供[hotfix](https://en.wikipedia.org/wiki/Hotfix)支持（因为人力带宽有限）。
 
-本项目的版本发布没有固定的周期，但是版本号会遵循[SemVer](https://semver.org/lang/zh-CN/)：在v0.1之后，每个修订版本会仅包含bug修复，而每个小版本会包含小的功能更新，而每个大版本则会包含重大功能更新。
+本项目的版本发布没有固定的周期，但是版本号会遵循[SemVer](https://semver.org/lang/zh-CN/)：在v0.1之后，每个修订版本会仅包含bug修复，而每个小版本会包含小的功能更新，而每个大版本则会包含重大功能更新（但是在没有达到v0.1 PoC的目标之前，所有的小功能更新都只会增加版本号的最后一位，也就是修订版本）。
 
 ## Rust版本策略
 作为官方，我们始终使用最新稳定版的Rust（当前是1.77.1）来构建和测试本项目。但是任何高于[Cargo.toml](Cargo.toml)中指定的[MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field)（当前是1.64.0，因为 `cargo-zigbuild` 的 `universal2-apple-darwin` target需要它）的Rust版本，均应正常构建，但是行为是否正确，官方不予保证。
@@ -72,7 +74,7 @@ cargo add opensound
 - [universal2-apple-darwin](https://crates.io/crates/cargo-zigbuild)（`x86_64-apple-darwin` 和 `aarch64-apple-darwin` 的组合）
 - x86_64-unknown-linux-gnu
 
-三个target的build。其它target可能也可以工作，但是不做保证。这三个target我们保证可以构建通过，但是对于它们测试的支持程度，这三个target会有差异（同样是由于资源和人力带宽有限）。
+三个target的build。其它target可能也可以工作，但是不做保证。我们保证本项目的所有版本，这三个target都可以构建通过，但是对于它们测试的支持程度，这三个target会有差异（同样是由于资源和人力带宽有限）。
 
 首先，我们只有两台Windows 10机器（一台Surface Laptop Studio和一台DELL工作站），和一台macOS Sonoma机器（2023款MacMini，M2芯片），因此Linux平台的测试暂时只能在虚拟机中进行，同时Windows 11的测试无法被覆盖到（Windows 8及以下的系统我们不再支持），另外x86芯片的macOS的测试也无法被覆盖到，以及更多低版本的macOS系统。
 

@@ -23,6 +23,8 @@ The Web GUI Playground is mainly for Exploring & Testing & [Live Coding](https:/
 But for now, we are currently focusing on the 0.1 version, which is a [PoC](https://en.wikipedia.org/wiki/Proof_of_concept) version.
 The main difference between the PoC version and the MVP version, is that in the PoC version, there will be no Web GUI Playground. Insdead, there will be a command-line "[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) Script Console" for testing & live coding demonstration.
 
+There will be several v0.0.x versions before v0.1, and every time a small feature is implemented, a new version will be bumped.
+
 In the future(after MVP), our roadmap will be:
 - Wrapping the C API & create bindings for various languages(like C++/Python/C#...)
 - Mobile support(1.0 will only support desktop platforms)
@@ -59,7 +61,7 @@ if you prefer to use the underlying Rust API.
 ## Branch Model
 This project adopts a "[centralized workflow](https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows)", which means there is only one single "main" branch, and all work is carried out on this branch. When each version is released, a tag for the current version will be created, and you can checkout a specific tag to obtain the complete code for the corresponding version. If you find a bug in a historical version, you need to first upgrade to the latest version to check if the bug still exists. If it still exists, please initiate an issue at [GitLab](https://gitlab.com/opensound-org/opensound/-/issues) or [Github](https://github.com/opensound-org/opensound/issues) and wait for the next version to fix it. We do not currently provide [hotfix](https://en.wikipedia.org/wiki/Hotfix) support for historical versions (due to limited human bandwidth).
 
-The version release of this project does not have a fixed cycle, but the version number will follow [SemVer](https://semver.org/): after v0.1, each revised version will only contain bug fixes, each minor version will contain minor feature updates, and each major version will contain major feature updates.
+The version release of this project does not have a fixed cycle, but the version number will follow [SemVer](https://semver.org/): after v0.1, each revised version will only contain bug fixes, each minor version will contain minor feature updates, and each major version will contain major feature updates (but before reaching the goal of v0.1 PoC, all small feature updates will only increase the last digit of the version number, which is the revision).
 
 ## Rust Version Policy
 As an official, we always use the latest stable version of Rust (currently 1.77.1) to build and test this project. However, any version of Rust that is higher than the [MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field) specified in [Cargo.toml](Cargo.toml) (currently 1.64.0, as it is required for the `cargo-zigbuild`'s `universal2-apple-darwin` target) should be built normally, but the official does not guarantee the correctness of the behavior.
@@ -72,7 +74,7 @@ We officially maintain the build of three targets:
 - [universal2-apple-darwin](https://crates.io/crates/cargo-zigbuild) (a combination of `x86_64-apple-darwin` and `aarch64-apple-darwin`)
 - x86_64-unknown-linux-gnu
 
-Other targets may also work, but we do not guarantee it. We guarantee that these three targets can be built successfully, but there may be differences in the level of support for their testing (also due to limited resources and human bandwidth).
+Other targets may also work, but we do not guarantee it. And we guarantee that all three targets can be built successfully for all versions of this project, but there may be differences in the level of support for their testing (also due to limited resources and human bandwidth).
 
 Firstly, we only have two Windows 10 machines (one Surface Laptop Studio and one DELL workstation) and one macOS Sonoma machine (2023 MacMini, M2 chip), so testing on the Linux platform can only be conducted on virtual machines temporarily. At the same time, testing on Windows 11 cannot be covered (we no longer support Windows 8 and below systems), and testing on macOS on x86 chips cannot be covered, as well as more lower versions of macOS systems.
 
