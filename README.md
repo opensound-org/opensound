@@ -76,6 +76,10 @@ We officially maintain the build of three targets:
 
 Other targets may also work, but we do not guarantee it. And we guarantee that all three targets can be built successfully for all versions of this project, but there may be differences in the level of support for their testing (also due to limited resources and human bandwidth).
 
+At the same time, in the v0.0.x stage, not all features will behave consistently on all platforms. We will have development priorities for platform-specific features, and some versions will only focus on the development of specific features for specific platforms. For specific version information, please refer to the Release Note or CHANGELOG of each version. But after v0.1, we will try our best to ensure the consistency of behavior across all platforms.
+
+Next we'll explain support for testing and platform-specific bug fixes:
+
 Firstly, we only have two Windows 10 machines (one Surface Laptop Studio and one DELL workstation) and one macOS Sonoma machine (2023 MacMini, M2 chip), so testing on the Linux platform can only be conducted on virtual machines temporarily. At the same time, testing on Windows 11 cannot be covered (we no longer support Windows 8 and below systems), and testing on macOS on x86 chips cannot be covered, as well as more lower versions of macOS systems.
 
 Because the author [@czy-29](https://github.com/czy-29) personally uses Surface Laptop Studio for daily development and DELL workstations for music production, the Windows 10 platform will have the highest level of support and quality assurance. macOS will be tested, but due to the short usage time and lack of dedicated testing personnel, the quality may not meet the Windows 10 level guarantee. Meanwhile, because Linux only tests on virtual machines, there may be a large number of physical machine use case scenarios that cannot be covered.
