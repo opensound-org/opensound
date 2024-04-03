@@ -82,7 +82,7 @@ cargo add opensound
 
 首先，我们只有两台Windows 10机器（一台Surface Laptop Studio和一台DELL工作站），和一台macOS Sonoma机器（2023款MacMini，M2芯片），因此Linux平台的测试暂时只能在虚拟机中进行，同时Windows 11的测试无法被覆盖到（Windows 8及以下的系统我们不再支持），另外x86芯片的macOS的测试也无法被覆盖到，以及更多低版本的macOS系统。
 
-因为 [@czy-29](https://github.com/czy-29) 作者个人日常开发会使用Surface Laptop Studio，同时制作音乐时会使用DELL工作站，因此Windows 10平台会有最高等级的支持和质量保证，macOS会进行测试但是因为使用时间不长，且没有专职的测试人员，因此质量可能无法达到Windows 10级别的保证。同时因为Linux只会在虚拟机中进行测试，因此可能有大量的物理机用例场景，是无法被覆盖到的。
+因为 [@czy-29](https://github.com/czy-29) 作者个人日常开发会使用Surface Laptop Studio，同时制作音乐时会使用DELL工作站，而且他对Windows平台的开发经验最丰富，对Windows系统编程（[Win32 API](https://learn.microsoft.com/en-us/windows/win32/)）的理解也最深刻，因此Windows 10平台会有最高等级的支持和质量保证。macOS会进行测试但是因为使用时间不长，且没有专职的测试人员，因此质量可能无法达到Windows 10级别的保证。同时因为Linux只会在虚拟机中进行测试，因此可能有大量的物理机用例场景，是无法被覆盖到的。
 
 当然，除了操作系统以外，还有大量的声卡驱动，以及音频插件的问题，这些显然我们的测试是不可能100%覆盖全的。对于以上提到的所有这些问题，如果您发现了一些bug，我们虽然欢迎您提交issue，但是对于修复，我们只能是尽力而为。对于我们有条件复现的bug，我们一定会修复。但是对于我们实在没有办法复现的环境，我们只能将修复它的优先级降低，也望理解。
 
