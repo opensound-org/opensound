@@ -32,6 +32,11 @@ In the future(after MVP), our roadmap will be:
 - OpenSound Native Playground(using Flutter & opensound's C API)
 - Game Audio functionalities & Game Engines(like Unity/Unreal/Godot) integration
 
+## Etymology
+The "Open" of OpenSound is the "Open" of "[Open Source](https://en.wikipedia.org/wiki/Open_source)" (similar to the naming of "[OpenCV](https://opencv.org/)"), and it is also the "Open" of "[Open Standard](https://en.wikipedia.org/wiki/Open_standard)" (similar to the naming of "[OpenAPI](https://www.openapis.org/)"). At the same time, our open source is fundamentalist open source, which is [open source](https://opensource.org/osd) that meets the [OSI](https://opensource.org/) definition.
+
+In addition, the abbreviation of "OpenSound" is "OS", which is the same as the abbreviation of "operating system". This is intentional design, and many concepts of the project will also be borrowed from the operating system, and this also reflects the ultimate goal of the project, which is to become a "sound" operating system!
+
 ## Install
 ### Binary usage:
 If you just want to try this project out, or want to use the pre-built Web API Server directly, you can:
