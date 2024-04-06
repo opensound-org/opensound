@@ -11,7 +11,7 @@
 最新版本：[v0.0.6](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)
 
 ## 是什么
-OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层级的开源声音系统抽象层（当前正在开发中，且在早期开发阶段），可适用于作为[专业音频](https://en.wikipedia.org/wiki/Professional_audio)应用（如[DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)）或其它声音相关应用的稳固后端内核。
+OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层级的开源声音系统抽象层，或者说声音/音频引擎（当前正在开发中，且在早期开发阶段）。可适用于作为[专业音频](https://en.wikipedia.org/wiki/Professional_audio)应用（如[DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)）或其它声音相关应用的稳固后端内核。
 
 1.0将会是我们的[MVP](https://en.wikipedia.org/wiki/Minimum_viable_product)版本，它会包含：
 - 核心Rust API

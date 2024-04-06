@@ -16,7 +16,7 @@ repository = "https://gitlab.com/opensound-org/opensound"
 homepage = "https://opensound.run"
 documentation = "https://docs.rs/opensound"
 description = """
-(WIP)A One-Stop Multi-Level SoundSystem Abstraction, suitable for being a solid foundation for Pro-Audio Applications(e.g. a DAW) or other sound related apps.
+(WIP)A One-Stop Multi-Level SoundSystem Abstraction (or say sound/audio engine). Suitable for being a solid foundation for Pro-Audio Applications(e.g. a DAW) or other sound related apps.
 """
 edition = "2021"
 rust-version = "1.64.0"
