@@ -6,6 +6,9 @@ pub mod gadgets {
 }
 pub mod kernel;
 
+/// Default boot procedure entry
+///
+/// 默认启动过程入口
 pub fn boot() {
     kernel::main();
 }
