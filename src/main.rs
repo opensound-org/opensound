@@ -1,5 +1,5 @@
 use clap::{crate_version, Parser};
-use opensound::ostp;
+use opensound::{boot, common::ostp, gadgets::timer};
 
 /// OpenSound PoC Binary
 #[derive(Parser, Debug)]
@@ -13,10 +13,10 @@ enum Commands {
 }
 
 fn main() {
-    println!("{:?}", Commands::parse());
-
     ostp::install_default();
-    ostp::emit::debug("Hello, world!", "main", None, true);
 
-    println!("Hello, world!");
+    match Commands::parse() {
+        Commands::Boot => boot(),
+        Commands::Timer => timer::main(),
+    }
 }
