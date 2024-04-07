@@ -3,6 +3,7 @@ pub mod common {
 }
 pub mod gadgets {
     pub mod timer;
+    pub mod uuid;
 }
 pub mod kernel;
 

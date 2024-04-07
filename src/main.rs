@@ -1,5 +1,9 @@
 use clap::{crate_version, Parser};
-use opensound::{boot, common::ostp, gadgets::timer};
+use opensound::{
+    boot,
+    common::ostp,
+    gadgets::{timer, uuid},
+};
 
 /// OpenSound PoC Binary
 #[derive(Parser, Debug)]
@@ -10,6 +14,8 @@ enum Commands {
     Boot,
     #[command(hide = true)]
     Timer,
+    #[command(hide = true)]
+    Uuid,
 }
 
 #[tokio::main]
@@ -19,5 +25,6 @@ async fn main() {
     match Commands::parse() {
         Commands::Boot => boot().await,
         Commands::Timer => timer::main().await,
+        Commands::Uuid => uuid::main().await,
     }
 }
