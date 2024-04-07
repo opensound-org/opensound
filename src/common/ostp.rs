@@ -1,4 +1,6 @@
 use serde::{Deserialize, Serialize};
+use std::cell::OnceCell;
+use sys_locale::get_locale;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub enum TraceLevel {
@@ -29,6 +31,12 @@ pub struct EventData {
 pub enum Tracing {
     Trace(TraceData),
     Event(EventData),
+}
+
+const IS_ZH_CN: OnceCell<bool> = OnceCell::new();
+
+pub fn is_zh_cn() -> bool {
+    *IS_ZH_CN.get_or_init(|| get_locale() == Some("zh-CN".into()))
 }
 
 pub mod emit {
