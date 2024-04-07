@@ -12,11 +12,12 @@ enum Commands {
     Timer,
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     ostp::install_default();
 
     match Commands::parse() {
-        Commands::Boot => boot(),
-        Commands::Timer => timer::main(),
+        Commands::Boot => boot().await,
+        Commands::Timer => timer::main().await,
     }
 }

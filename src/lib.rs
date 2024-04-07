@@ -9,8 +9,8 @@ pub mod kernel;
 /// Default boot procedure entry
 ///
 /// 默认启动过程入口
-pub fn boot() {
-    kernel::main();
+pub async fn boot() {
+    kernel::main().await;
 }
 
 pub fn add(left: usize, right: usize) -> usize {
