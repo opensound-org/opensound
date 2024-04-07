@@ -1,7 +1,7 @@
 use clap::{crate_version, Parser};
 use opensound::{
     boot,
-    common::{ostd, ostp},
+    common::ostd::signal::disable_ctrlc,
     gadgets::{timer, uuid},
 };
 
@@ -20,8 +20,7 @@ enum Commands {
 
 #[tokio::main]
 async fn main() {
-    ostp::install_default();
-    ostd::signal::disable_ctrlc();
+    disable_ctrlc();
 
     match Commands::parse() {
         Commands::Boot => boot().await,

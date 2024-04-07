@@ -31,10 +31,13 @@ pub mod gadgets {
 /// OpenSound内核
 pub mod kernel;
 
+use common::ostp;
+
 /// Default boot procedure entry
 ///
 /// 默认启动过程入口
 pub async fn boot() {
+    ostp::install_default();
     kernel::main().await;
 }
 
