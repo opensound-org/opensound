@@ -33,6 +33,11 @@ pub mod gadgets {
 /// OpenSound内核
 pub mod kernel;
 
+/// Version number constant prefixed with "v"
+///
+/// 带“v”前缀的版本号常量
+pub const VERSION: &'static str = concat!("v", clap::crate_version!());
+
 use common::{ostp, CommonRes};
 
 /// Default boot procedure entry
