@@ -15,6 +15,7 @@ pub mod common {
     }
     pub mod ostp;
 
+    /// Result<(), Box<dyn std::error::Error + Send + Sync>>
     pub type CommonRes = Result<(), Box<dyn std::error::Error + Send + Sync>>;
 }
 /// The `Gadget` concept
