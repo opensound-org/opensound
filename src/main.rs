@@ -1,7 +1,7 @@
 use clap::{crate_version, Parser};
 use opensound::{
     boot,
-    common::ostd::signal::disable_ctrlc,
+    common::{ostd::signal::disable_ctrlc, CommonRes},
     gadgets::{timer, uuid},
 };
 
@@ -19,7 +19,7 @@ enum Commands {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> CommonRes {
     disable_ctrlc();
 
     match Commands::parse() {

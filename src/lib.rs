@@ -14,6 +14,8 @@ pub mod common {
         pub mod time;
     }
     pub mod ostp;
+
+    pub type CommonRes = Result<(), Box<dyn std::error::Error + Send + Sync>>;
 }
 /// The `Gadget` concept
 ///
@@ -31,14 +33,14 @@ pub mod gadgets {
 /// OpenSound内核
 pub mod kernel;
 
-use common::ostp;
+use common::{ostp, CommonRes};
 
 /// Default boot procedure entry
 ///
 /// 默认启动过程入口
-pub async fn boot() {
+pub async fn boot() -> CommonRes {
     ostp::install_default();
-    kernel::main().await;
+    kernel::main().await
 }
 
 pub fn add(left: usize, right: usize) -> usize {
