@@ -12,18 +12,26 @@ pub enum TraceLevel {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+pub struct SourceInfo {
+    gadget: String,
+    unit: String,
+    source_type: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
 pub struct TraceData {
     level: TraceLevel,
-    message: String,
-    module: String,
-    source: Option<String>,
+    message_en: String,
+    message_zh: Option<String>,
+    source_info: SourceInfo,
     payload: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct EventData {
-    module: String,
-    source: String,
+    gadget: String,
+    unit: String,
+    event_type: String,
     payload: String,
 }
 
@@ -43,121 +51,215 @@ pub mod emit {
     use super::TraceLevel;
     use serde::Serialize;
 
-    pub fn trace(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
-        emit::<()>(TraceLevel::Trace, message, module, source, None, timestamp);
+    pub fn trace(
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
+    ) {
+        emit::<()>(
+            TraceLevel::Trace,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
+            None,
+            true,
+        );
     }
 
     pub fn trace_payload(
-        message: &str,
-        module: &str,
-        source: Option<&str>,
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
         payload: impl Serialize,
-        timestamp: bool,
     ) {
         emit(
             TraceLevel::Trace,
-            message,
-            module,
-            source,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
             Some(payload),
-            timestamp,
+            true,
         );
     }
 
-    pub fn debug(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
-        emit::<()>(TraceLevel::Debug, message, module, source, None, timestamp);
+    pub fn debug(
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
+    ) {
+        emit::<()>(
+            TraceLevel::Debug,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
+            None,
+            true,
+        );
     }
 
     pub fn debug_payload(
-        message: &str,
-        module: &str,
-        source: Option<&str>,
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
         payload: impl Serialize,
-        timestamp: bool,
     ) {
         emit(
             TraceLevel::Debug,
-            message,
-            module,
-            source,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
             Some(payload),
-            timestamp,
+            true,
         );
     }
 
-    pub fn info(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
-        emit::<()>(TraceLevel::Info, message, module, source, None, timestamp);
+    pub fn info(
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
+    ) {
+        emit::<()>(
+            TraceLevel::Info,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
+            None,
+            true,
+        );
     }
 
     pub fn info_payload(
-        message: &str,
-        module: &str,
-        source: Option<&str>,
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
         payload: impl Serialize,
-        timestamp: bool,
     ) {
         emit(
             TraceLevel::Info,
-            message,
-            module,
-            source,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
             Some(payload),
-            timestamp,
+            true,
         );
     }
 
-    pub fn warn(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
-        emit::<()>(TraceLevel::Warn, message, module, source, None, timestamp);
+    pub fn warn(
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
+    ) {
+        emit::<()>(
+            TraceLevel::Warn,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
+            None,
+            true,
+        );
     }
 
     pub fn warn_payload(
-        message: &str,
-        module: &str,
-        source: Option<&str>,
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
         payload: impl Serialize,
-        timestamp: bool,
     ) {
         emit(
             TraceLevel::Warn,
-            message,
-            module,
-            source,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
             Some(payload),
-            timestamp,
+            true,
         );
     }
 
-    pub fn error(message: &str, module: &str, source: Option<&str>, timestamp: bool) {
-        emit::<()>(TraceLevel::Error, message, module, source, None, timestamp);
+    pub fn error(
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
+    ) {
+        emit::<()>(
+            TraceLevel::Error,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
+            None,
+            true,
+        );
     }
 
     pub fn error_payload(
-        message: &str,
-        module: &str,
-        source: Option<&str>,
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
         payload: impl Serialize,
-        timestamp: bool,
     ) {
         emit(
             TraceLevel::Error,
-            message,
-            module,
-            source,
+            message_en,
+            message_zh,
+            gadget,
+            unit,
+            source_type,
             Some(payload),
-            timestamp,
+            true,
         );
     }
 
     fn emit<T: Serialize>(
         level: TraceLevel,
-        message: &str,
-        module: &str,
-        source: Option<&str>,
+        message_en: &str,
+        message_zh: Option<&str>,
+        gadget: &str,
+        unit: &str,
+        source_type: Option<&str>,
         payload: Option<T>,
         timestamp: bool,
     ) {
-        let payload = || payload.map(|p| serde_json::to_string(&p).unwrap());
-        let utc = || {
+        // These two variables will be passed to the log server, but will not be output to the console.
+        // 这两个变量会传递给日志服务器，但不会输出给控制台。
+        let is_zh_cn = super::is_zh_cn();
+        let _utc = || {
             if timestamp {
                 Some(format!("{:?}", chrono::Utc::now().naive_utc()))
             } else {
@@ -165,21 +267,28 @@ pub mod emit {
             }
         };
 
+        let message = if is_zh_cn && message_zh.is_some() {
+            message_zh.unwrap()
+        } else {
+            message_en
+        };
+        let payload = || payload.map(|p| serde_json::to_string(&p).unwrap());
+
         match level {
             TraceLevel::Trace => {
-                tracing::trace!(target: "ostp", message, module, source, utc = utc(), payload = payload())
+                tracing::trace!(target: "ostp", message, gadget, unit, source_type, payload = payload())
             }
             TraceLevel::Debug => {
-                tracing::debug!(target: "ostp", message, module, source, utc = utc(), payload = payload())
+                tracing::debug!(target: "ostp", message, gadget, unit, source_type, payload = payload())
             }
             TraceLevel::Info => {
-                tracing::info!(target: "ostp", message, module, source, utc = utc(), payload = payload())
+                tracing::info!(target: "ostp", message, gadget, unit, source_type, payload = payload())
             }
             TraceLevel::Warn => {
-                tracing::warn!(target: "ostp", message, module, source, utc = utc(), payload = payload())
+                tracing::warn!(target: "ostp", message, gadget, unit, source_type, payload = payload())
             }
             TraceLevel::Error => {
-                tracing::error!(target: "ostp", message, module, source, utc = utc(), payload = payload())
+                tracing::error!(target: "ostp", message, gadget, unit, source_type, payload = payload())
             }
         }
     }
