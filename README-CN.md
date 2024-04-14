@@ -13,12 +13,14 @@
 ## 是什么
 OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层级的开源声音系统抽象层，或者说声音/音频引擎（当前正在开发中，且在早期开发阶段）。可适用于作为[专业音频](https://en.wikipedia.org/wiki/Professional_audio)应用（如[DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)）或其它声音相关应用的稳固后端内核。
 
+“声音系统”基本可代指与声音有关的所有软件系统，从简单的音频播放器，到复杂的DAW，都应可以使用本项目方便地实现。“多层级”意味着从高层次的DAW工作流，到底层的操作系统音频API抽象，本项目都将提供封装与建模。“一站式”意味着上述所有能力都是“开箱即用”的，不需要您自己组合任何外部依赖去实现。
+
 1.0将会是我们的[MVP](https://en.wikipedia.org/wiki/Minimum_viable_product)版本，它会包含：
 - 核心Rust API
 - 一个Web API Server
 - 一个内置的Web GUI Playground
 
-内置的Web GUI Playground将主要用于探索&测试&[Live Coding](https://en.wikipedia.org/wiki/Live_coding)用途（它的形态会比较像[JUCE](https://juce.com/)的DemoRunner和AudioPluginHost，以及本项目的一些特色功能的结合体），但是当然，您也可以用它来进行编曲/音乐制作，只是如果您仅使用Playground的交互前端的话，您的工作流将会比较繁杂（比如Playground可能并不会有一个完整的钢琴卷帘）。
+内置的Web GUI Playground将主要用于探索&测试&[Live Coding](https://en.wikipedia.org/wiki/Live_coding)用途（它的形态会比较像[JUCE](https://juce.com/)的DemoRunner和AudioPluginHost，以及本项目的一些特色功能的结合体），但是当然，您也可以用它来进行编曲/音乐制作，只是如果您仅使用Playground的交互前端的话，您的工作流将会比较繁杂（比如Playground可能并不会有一个完整的钢琴卷帘）。与此同时，尽管自带的Web GUI Playground前端不是一个完整的DAW体验，但是背后的Web API Server应当可用于作为一个DAW的完整后端。
 
 但是现在，我们目前正在专注于0.1版本，它将是一个[PoC](https://en.wikipedia.org/wiki/Proof_of_concept)版本。
 PoC版本和MVP版本的主要区别在于，PoC版本不会有Web GUI Playground，取而代之的是一个用于测试和Live Coding演示的命令行“[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)脚本控制台”。

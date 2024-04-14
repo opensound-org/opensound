@@ -13,12 +13,14 @@ Latest version: [v0.0.6](https://github.com/opensound-org/opensound/releases/tag
 ## What
 OpenSound is a (currently WIP and in early development stage) OpenSource One-Stop Multi-Level SoundSystem Abstraction (or say sound/audio engine) written in [Rust](https://www.rust-lang.org/). Suitable for being a solid foundation for [Pro-Audio](https://en.wikipedia.org/wiki/Professional_audio) Applications(e.g. a [DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)) or other sound related apps.
 
+"SoundSystem" can basically refer to all software systems related to sound, from simple audio players to complex DAWs, all of which can be easily implemented using this project. "Multi-Level" means that from high-level DAW workflows to low-level abstraction of operating system audio APIs, this project will provide encapsulation and modeling. "One-Stop" means that all the above capabilities are available "out-of-the-box" and do not require you to combine any external dependencies to implement them yourself.
+
 1.0 will be our [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product) version, and it will consist of:
 - The Core Rust API
 - A Web API Server
 - A bundled Web GUI Playground
 
-The Web GUI Playground is mainly for Exploring & Testing & [Live Coding](https://en.wikipedia.org/wiki/Live_coding) purpose (its form will resemble the combination of [JUCE](https://juce.com/)'s DemoRunner and AudioPluginHost, as well as some of the unique features of this project), but of course, you can use it for music arrangement/production, it's just that the workflow can be quite cumbersome if you use just the playground frontend(e.g. this playground may not have a complete piano roll).
+The Web GUI Playground is mainly for Exploring & Testing & [Live Coding](https://en.wikipedia.org/wiki/Live_coding) purpose (its form will resemble the combination of [JUCE](https://juce.com/)'s DemoRunner and AudioPluginHost, as well as some of the unique features of this project), but of course, you can use it for music arrangement/production, it's just that the workflow can be quite cumbersome if you use just the playground frontend(e.g. this playground may not have a complete piano roll). At the same time, although the built-in Web GUI Playground front-end is not a complete DAW experience, the underlying Web API Server should be available as a complete backend for a DAW.
 
 But for now, we are currently focusing on the 0.1 version, which is a [PoC](https://en.wikipedia.org/wiki/Proof_of_concept) version.
 The main difference between the PoC version and the MVP version, is that in the PoC version, there will be no Web GUI Playground. Insdead, there will be a command-line "[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) Script Console" for testing & live coding demonstration.
