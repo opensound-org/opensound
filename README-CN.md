@@ -33,6 +33,7 @@ v0.1之前还会有若干个v0.0.x版本，每实现一个小功能都会bump一
 - WASM支持
 - OpenSound原生Playground（使用Flutter & opensound的C API）
 - 游戏音频功能，以及游戏引擎（如Unity/Unreal/Godot）集成
+- （或许）嵌入式设备支持
 
 ## 词源学
 OpenSound的“Open”，就是“[Open Source](https://en.wikipedia.org/wiki/Open_source)”的“Open”（类似“[OpenCV](https://opencv.org/)”的命名），同时也是“[Open Standard](https://en.wikipedia.org/wiki/Open_standard)”的“Open”（类似“[OpenAPI](https://www.openapis.org/)”的命名）。同时我们的开源是原教旨主义开源，也就是符合[OSI](https://opensource.org/)定义下的[开源](https://opensource.org/osd)。

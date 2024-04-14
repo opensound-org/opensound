@@ -33,6 +33,7 @@ In the future(after MVP), our roadmap will be:
 - WASM support
 - OpenSound Native Playground(using Flutter & opensound's C API)
 - Game Audio functionalities & Game Engines(like Unity/Unreal/Godot) integration
+- (Maybe) Embedded device support
 
 ## Etymology
 The "Open" of OpenSound is the "Open" of "[Open Source](https://en.wikipedia.org/wiki/Open_source)" (similar to the naming of "[OpenCV](https://opencv.org/)"), and it is also the "Open" of "[Open Standard](https://en.wikipedia.org/wiki/Open_standard)" (similar to the naming of "[OpenAPI](https://www.openapis.org/)"). At the same time, our open source is fundamentalist open source, which is [open source](https://opensource.org/osd) that meets the [OSI](https://opensource.org/) definition.
