@@ -19,7 +19,7 @@ description = """
 (WIP)A One-Stop Multi-Level SoundSystem Abstraction (or say sound/audio engine). Suitable for being a solid foundation for Pro-Audio Applications(e.g. a DAW) or other sound related apps.
 """
 edition = "2021"
-rust-version = "1.74.0"
+rust-version = "1.75.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
