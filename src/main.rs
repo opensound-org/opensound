@@ -9,7 +9,10 @@ use opensound::{
 /// OpenSound PoC Binary
 #[derive(Parser, Debug)]
 #[command(version = VERSION, author, long_about = None)]
-// TMD clap不支持中文，因此命令行帮助文档暂时就没办法i18n或者l10n了……
+// Damn clap does not support languages other than English,
+// so the command line help documentation cannot support i18n or l10n for the time being...
+//
+// TMD clap不支持英文以外的其它语言，因此命令行帮助文档暂时就没办法i18n或者l10n了……
 enum Commands {
     /// Boot the API Server
     Boot,
