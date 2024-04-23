@@ -29,10 +29,10 @@ pub mod gadgets {
     pub mod timer;
     pub mod uuid;
 }
-/// The OpenSound Kernel
+/// The OpenSound MicroKernel
 ///
-/// OpenSound内核
-pub mod kernel;
+/// OpenSound微内核
+pub mod microkernel;
 
 /// Version number constant prefixed with "v"
 ///
@@ -46,5 +46,5 @@ use common::{ostp, CommonRes};
 /// 默认启动过程入口
 pub async fn boot() -> CommonRes {
     ostp::install_default();
-    kernel::main().await
+    microkernel::main().await
 }
