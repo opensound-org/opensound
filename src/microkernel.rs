@@ -170,9 +170,9 @@ mod reqres {
         }
     }
 
-    struct ReqRes(UnboundedSender<Func>);
+    struct HttpReqRes(UnboundedSender<Func>);
 
-    impl ReqRes {
+    impl HttpReqRes {
         async fn get_query(
             &self,
             id: &str,
