@@ -4,10 +4,11 @@ use crate::common::{ostp, CommonRes};
 mod reqres {
     use http::StatusCode;
     use serde_json::Value;
-    use std::collections::HashMap;
+    use std::{collections::HashMap, sync::Arc};
     use tokio::sync::{
         mpsc::UnboundedSender,
         oneshot::{self, Receiver, Sender},
+        RwLock,
     };
 
     trait Resp {
@@ -16,7 +17,6 @@ mod reqres {
     }
 
     struct Common {
-        pub id: String,
         pub endpoint: String,
         pub token: Option<String>,
     }
@@ -86,7 +86,6 @@ mod reqres {
 
     impl Func {
         fn get_query(
-            id: &str,
             endpoint: &str,
             token: Option<&str>,
             query: Option<HashMap<String, String>>,
@@ -95,7 +94,6 @@ mod reqres {
             (
                 Self::GetQuery(GetQuery {
                     common: Common {
-                        id: id.into(),
                         endpoint: endpoint.into(),
                         token: token.map(From::from),
                     },
@@ -107,7 +105,6 @@ mod reqres {
         }
 
         fn post_json(
-            id: &str,
             endpoint: &str,
             token: Option<&str>,
             payload: Value,
@@ -116,7 +113,6 @@ mod reqres {
             (
                 Self::PostJSON(PostJSON {
                     common: Common {
-                        id: id.into(),
                         endpoint: endpoint.into(),
                         token: token.map(From::from),
                     },
@@ -128,7 +124,6 @@ mod reqres {
         }
 
         fn post_text(
-            id: &str,
             endpoint: &str,
             token: Option<&str>,
             payload: &str,
@@ -137,7 +132,6 @@ mod reqres {
             (
                 Self::PostText(PostText {
                     common: Common {
-                        id: id.into(),
                         endpoint: endpoint.into(),
                         token: token.map(From::from),
                     },
@@ -149,7 +143,6 @@ mod reqres {
         }
 
         fn post_binary(
-            id: &str,
             endpoint: &str,
             token: Option<&str>,
             payload: &[u8],
@@ -158,7 +151,6 @@ mod reqres {
             (
                 Self::PostBinary(PostBinary {
                     common: Common {
-                        id: id.into(),
                         endpoint: endpoint.into(),
                         token: token.map(From::from),
                     },
@@ -170,7 +162,7 @@ mod reqres {
         }
     }
 
-    struct HttpReqRes(UnboundedSender<Func>);
+    struct HttpReqRes(Arc<RwLock<HashMap<String, UnboundedSender<Func>>>>);
 
     impl HttpReqRes {
         async fn get_query(
@@ -180,9 +172,21 @@ mod reqres {
             token: Option<&str>,
             query: Option<HashMap<String, String>>,
         ) -> (Option<String>, StatusCode) {
-            let (func, receiver) = Func::get_query(id, endpoint, token, query);
-            self.0.send(func).ok();
-            receiver.await.unwrap()
+            match self.get_sender(id).await {
+                Some(sender) => {
+                    let (func, receiver) = Func::get_query(endpoint, token, query);
+                    if sender.send(func).is_ok() {
+                        if let Ok(resp) = receiver.await {
+                            resp
+                        } else {
+                            (None, StatusCode::BAD_GATEWAY)
+                        }
+                    } else {
+                        (None, StatusCode::NOT_FOUND)
+                    }
+                }
+                None => (None, StatusCode::NOT_FOUND),
+            }
         }
 
         async fn post_json(
@@ -192,9 +196,21 @@ mod reqres {
             token: Option<&str>,
             payload: Value,
         ) -> (Option<Value>, StatusCode) {
-            let (func, receiver) = Func::post_json(id, endpoint, token, payload);
-            self.0.send(func).ok();
-            receiver.await.unwrap()
+            match self.get_sender(id).await {
+                Some(sender) => {
+                    let (func, receiver) = Func::post_json(endpoint, token, payload);
+                    if sender.send(func).is_ok() {
+                        if let Ok(resp) = receiver.await {
+                            resp
+                        } else {
+                            (None, StatusCode::BAD_GATEWAY)
+                        }
+                    } else {
+                        (None, StatusCode::NOT_FOUND)
+                    }
+                }
+                None => (None, StatusCode::NOT_FOUND),
+            }
         }
 
         async fn post_text(
@@ -204,9 +220,21 @@ mod reqres {
             token: Option<&str>,
             payload: &str,
         ) -> (Option<String>, StatusCode) {
-            let (func, receiver) = Func::post_text(id, endpoint, token, payload);
-            self.0.send(func).ok();
-            receiver.await.unwrap()
+            match self.get_sender(id).await {
+                Some(sender) => {
+                    let (func, receiver) = Func::post_text(endpoint, token, payload);
+                    if sender.send(func).is_ok() {
+                        if let Ok(resp) = receiver.await {
+                            resp
+                        } else {
+                            (None, StatusCode::BAD_GATEWAY)
+                        }
+                    } else {
+                        (None, StatusCode::NOT_FOUND)
+                    }
+                }
+                None => (None, StatusCode::NOT_FOUND),
+            }
         }
 
         async fn post_binary(
@@ -216,9 +244,25 @@ mod reqres {
             token: Option<&str>,
             payload: &[u8],
         ) -> (Option<Vec<u8>>, StatusCode) {
-            let (func, receiver) = Func::post_binary(id, endpoint, token, payload);
-            self.0.send(func).ok();
-            receiver.await.unwrap()
+            match self.get_sender(id).await {
+                Some(sender) => {
+                    let (func, receiver) = Func::post_binary(endpoint, token, payload);
+                    if sender.send(func).is_ok() {
+                        if let Ok(resp) = receiver.await {
+                            resp
+                        } else {
+                            (None, StatusCode::BAD_GATEWAY)
+                        }
+                    } else {
+                        (None, StatusCode::NOT_FOUND)
+                    }
+                }
+                None => (None, StatusCode::NOT_FOUND),
+            }
+        }
+
+        async fn get_sender(&self, id: &str) -> Option<UnboundedSender<Func>> {
+            self.0.read().await.get(id).cloned()
         }
     }
 }
