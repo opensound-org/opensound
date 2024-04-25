@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::cell::OnceCell;
+use std::sync::OnceLock;
 use sys_locale::get_locale;
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -41,7 +41,7 @@ pub enum Tracing {
     Event(EventData),
 }
 
-const IS_ZH_CN: OnceCell<bool> = OnceCell::new();
+const IS_ZH_CN: OnceLock<bool> = OnceLock::new();
 
 pub fn is_zh_cn() -> bool {
     *IS_ZH_CN.get_or_init(|| get_locale() == Some("zh-CN".into()))

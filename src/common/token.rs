@@ -3,11 +3,11 @@ use aes_gcm::{
     Aes128Gcm, Key, Nonce,
 };
 use base64::{engine::general_purpose::URL_SAFE, DecodeError, Engine as _};
-use std::{cell::OnceCell, string::FromUtf8Error};
+use std::{string::FromUtf8Error, sync::OnceLock};
 use thiserror::Error;
 
 #[allow(dead_code)]
-const SECRET_KEY: OnceCell<Key<Aes128Gcm>> = OnceCell::new();
+const SECRET_KEY: OnceLock<Key<Aes128Gcm>> = OnceLock::new();
 
 #[cfg(not(test))]
 fn get_secret_key() -> Key<Aes128Gcm> {
