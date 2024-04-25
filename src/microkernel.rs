@@ -2,6 +2,7 @@ use crate::common::{ostp, CommonRes};
 
 #[allow(dead_code)]
 mod reqres {
+    use crate::common::token::token_to_gadget_id;
     use http::StatusCode;
     use serde_json::Value;
     use std::{collections::HashMap, sync::Arc};
@@ -18,7 +19,7 @@ mod reqres {
 
     struct Common {
         pub endpoint: String,
-        pub token: Option<String>,
+        pub src_id: Option<String>,
     }
 
     struct GetQuery {
@@ -87,7 +88,7 @@ mod reqres {
     impl Func {
         fn get_query(
             endpoint: &str,
-            token: Option<&str>,
+            src_id: Option<&str>,
             query: Option<HashMap<String, String>>,
         ) -> (Self, Receiver<(Option<String>, StatusCode)>) {
             let (sender, receiver) = oneshot::channel();
@@ -95,7 +96,7 @@ mod reqres {
                 Self::GetQuery(GetQuery {
                     common: Common {
                         endpoint: endpoint.into(),
-                        token: token.map(From::from),
+                        src_id: src_id.map(From::from),
                     },
                     query,
                     sender,
@@ -106,7 +107,7 @@ mod reqres {
 
         fn post_json(
             endpoint: &str,
-            token: Option<&str>,
+            src_id: Option<&str>,
             payload: Value,
         ) -> (Self, Receiver<(Option<Value>, StatusCode)>) {
             let (sender, receiver) = oneshot::channel();
@@ -114,7 +115,7 @@ mod reqres {
                 Self::PostJSON(PostJSON {
                     common: Common {
                         endpoint: endpoint.into(),
-                        token: token.map(From::from),
+                        src_id: src_id.map(From::from),
                     },
                     payload,
                     sender,
@@ -125,7 +126,7 @@ mod reqres {
 
         fn post_text(
             endpoint: &str,
-            token: Option<&str>,
+            src_id: Option<&str>,
             payload: &str,
         ) -> (Self, Receiver<(Option<String>, StatusCode)>) {
             let (sender, receiver) = oneshot::channel();
@@ -133,7 +134,7 @@ mod reqres {
                 Self::PostText(PostText {
                     common: Common {
                         endpoint: endpoint.into(),
-                        token: token.map(From::from),
+                        src_id: src_id.map(From::from),
                     },
                     payload: payload.into(),
                     sender,
@@ -144,7 +145,7 @@ mod reqres {
 
         fn post_binary(
             endpoint: &str,
-            token: Option<&str>,
+            src_id: Option<&str>,
             payload: &[u8],
         ) -> (Self, Receiver<(Option<Vec<u8>>, StatusCode)>) {
             let (sender, receiver) = oneshot::channel();
@@ -152,7 +153,7 @@ mod reqres {
                 Self::PostBinary(PostBinary {
                     common: Common {
                         endpoint: endpoint.into(),
-                        token: token.map(From::from),
+                        src_id: src_id.map(From::from),
                     },
                     payload: payload.into(),
                     sender,
@@ -174,7 +175,18 @@ mod reqres {
         ) -> (Option<String>, StatusCode) {
             match self.get_sender(id).await {
                 Some(sender) => {
-                    let (func, receiver) = Func::get_query(endpoint, token, query);
+                    let src_id = if let Some(token) = token {
+                        if let Ok(id) = token_to_gadget_id(token) {
+                            Some(id)
+                        } else {
+                            return (None, StatusCode::FORBIDDEN);
+                        }
+                    } else {
+                        None
+                    };
+                    let src_id = src_id.as_deref();
+                    let (func, receiver) = Func::get_query(endpoint, src_id, query);
+
                     if sender.send(func).is_ok() {
                         if let Ok(resp) = receiver.await {
                             resp
@@ -198,7 +210,18 @@ mod reqres {
         ) -> (Option<Value>, StatusCode) {
             match self.get_sender(id).await {
                 Some(sender) => {
-                    let (func, receiver) = Func::post_json(endpoint, token, payload);
+                    let src_id = if let Some(token) = token {
+                        if let Ok(id) = token_to_gadget_id(token) {
+                            Some(id)
+                        } else {
+                            return (None, StatusCode::FORBIDDEN);
+                        }
+                    } else {
+                        None
+                    };
+                    let src_id = src_id.as_deref();
+                    let (func, receiver) = Func::post_json(endpoint, src_id, payload);
+
                     if sender.send(func).is_ok() {
                         if let Ok(resp) = receiver.await {
                             resp
@@ -222,7 +245,18 @@ mod reqres {
         ) -> (Option<String>, StatusCode) {
             match self.get_sender(id).await {
                 Some(sender) => {
-                    let (func, receiver) = Func::post_text(endpoint, token, payload);
+                    let src_id = if let Some(token) = token {
+                        if let Ok(id) = token_to_gadget_id(token) {
+                            Some(id)
+                        } else {
+                            return (None, StatusCode::FORBIDDEN);
+                        }
+                    } else {
+                        None
+                    };
+                    let src_id = src_id.as_deref();
+                    let (func, receiver) = Func::post_text(endpoint, src_id, payload);
+
                     if sender.send(func).is_ok() {
                         if let Ok(resp) = receiver.await {
                             resp
@@ -246,7 +280,18 @@ mod reqres {
         ) -> (Option<Vec<u8>>, StatusCode) {
             match self.get_sender(id).await {
                 Some(sender) => {
-                    let (func, receiver) = Func::post_binary(endpoint, token, payload);
+                    let src_id = if let Some(token) = token {
+                        if let Ok(id) = token_to_gadget_id(token) {
+                            Some(id)
+                        } else {
+                            return (None, StatusCode::FORBIDDEN);
+                        }
+                    } else {
+                        None
+                    };
+                    let src_id = src_id.as_deref();
+                    let (func, receiver) = Func::post_binary(endpoint, src_id, payload);
+
                     if sender.send(func).is_ok() {
                         if let Ok(resp) = receiver.await {
                             resp
