@@ -34,10 +34,8 @@ pub mod gadgets {
     pub mod timer;
     pub mod uuid;
 }
-/// The OpenSound MicroKernel
-///
-/// OpenSound微内核
-pub mod microkernel {
+
+mod microkernel {
     mod main;
     pub use main::*;
 
