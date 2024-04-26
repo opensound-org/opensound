@@ -37,10 +37,13 @@ pub mod gadgets {
 /// The OpenSound MicroKernel
 ///
 /// OpenSound微内核
-pub mod microkernel;
+pub mod microkernel {
+    mod main;
+    pub use main::*;
 
-#[allow(dead_code)]
-mod reqres;
+    #[allow(dead_code)]
+    mod reqres;
+}
 
 /// Version number constant prefixed with "v"
 ///
