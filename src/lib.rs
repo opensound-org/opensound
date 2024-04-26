@@ -53,7 +53,7 @@ use common::{ostp, CommonRes};
 /// Default boot procedure entry
 ///
 /// 默认启动过程入口
-pub async fn boot() -> CommonRes {
+pub async fn boot_default() -> CommonRes {
     ostp::install_default();
     microkernel::main().await
 }

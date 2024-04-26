@@ -1,6 +1,6 @@
 use clap::Parser;
 use opensound::{
-    boot,
+    boot_default,
     common::{ostd::signal::disable_ctrlc, CommonRes},
     gadgets::{timer, uuid},
     VERSION,
@@ -27,7 +27,7 @@ async fn main() -> CommonRes {
     disable_ctrlc();
 
     match Commands::parse() {
-        Commands::Boot => boot().await,
+        Commands::Boot => boot_default().await,
         Commands::Timer => timer::main().await,
         Commands::Uuid => uuid::main().await,
     }
