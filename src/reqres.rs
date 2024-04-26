@@ -162,9 +162,9 @@ impl Func {
     }
 }
 
-struct ReqResGateway(Arc<RwLock<HashMap<String, UnboundedSender<Func>>>>);
+struct FuncGateway(Arc<RwLock<HashMap<String, UnboundedSender<Func>>>>);
 
-impl ReqResGateway {
+impl FuncGateway {
     async fn get_query(
         &self,
         id: &str,
