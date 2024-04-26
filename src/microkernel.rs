@@ -166,9 +166,9 @@ mod reqres {
         }
     }
 
-    struct HttpReqRes(Arc<RwLock<HashMap<String, UnboundedSender<Func>>>>);
+    struct ReqResGateway(Arc<RwLock<HashMap<String, UnboundedSender<Func>>>>);
 
-    impl HttpReqRes {
+    impl ReqResGateway {
         async fn get_query(
             &self,
             id: &str,
