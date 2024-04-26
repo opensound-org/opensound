@@ -39,6 +39,9 @@ pub mod gadgets {
 /// OpenSound微内核
 pub mod microkernel;
 
+#[allow(dead_code)]
+mod reqres;
+
 /// Version number constant prefixed with "v"
 ///
 /// 带“v”前缀的版本号常量
