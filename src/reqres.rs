@@ -331,12 +331,12 @@ impl FuncGateway {
 struct SysApi;
 
 impl SysApi {
-    fn index() -> String {
-        "OpenSound HttpServer Up & Running!".into()
+    fn index() -> &'static str {
+        "OpenSound HttpServer Up & Running!"
     }
 
-    fn hello() -> String {
-        "Hello, world!".into()
+    fn hello() -> &'static str {
+        "Hello, world!"
     }
 
     fn version() -> Value {
