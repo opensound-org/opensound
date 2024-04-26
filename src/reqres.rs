@@ -1,6 +1,6 @@
 use crate::common::token::token_to_gadget_id;
 use http::StatusCode;
-use serde_json::Value;
+use serde_json::{json, Value};
 use std::{collections::HashMap, sync::Arc};
 use tokio::{
     sync::{
@@ -325,5 +325,33 @@ impl FuncGateway {
     #[cfg(not(debug_assertions))]
     fn get_timeout_dur() -> Duration {
         Duration::from_secs_f64(3.0)
+    }
+}
+
+struct SysApi;
+
+impl SysApi {
+    fn index() -> String {
+        "OpenSound HttpServer Up & Running!".into()
+    }
+
+    fn hello() -> String {
+        "Hello, world!".into()
+    }
+
+    fn version() -> Value {
+        json!({
+            "version": crate::VERSION
+        })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn version() {
+        assert_eq!(SysApi::version().to_string(), "{\"version\":\"v0.0.6\"}");
     }
 }
