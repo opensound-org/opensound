@@ -190,6 +190,8 @@ mod reqres {
                     let src_id = src_id.as_deref();
                     let (func, receiver) = Func::get_query(endpoint, src_id, query);
 
+                    // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
+
                     if sender.send(func).is_ok() {
                         match timeout(Self::get_timeout_dur(), receiver).await {
                             Ok(Ok(resp)) => resp,
@@ -224,6 +226,8 @@ mod reqres {
                     };
                     let src_id = src_id.as_deref();
                     let (func, receiver) = Func::post_json(endpoint, src_id, payload);
+
+                    // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
 
                     if sender.send(func).is_ok() {
                         match timeout(Self::get_timeout_dur(), receiver).await {
@@ -260,6 +264,8 @@ mod reqres {
                     let src_id = src_id.as_deref();
                     let (func, receiver) = Func::post_text(endpoint, src_id, payload);
 
+                    // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
+
                     if sender.send(func).is_ok() {
                         match timeout(Self::get_timeout_dur(), receiver).await {
                             Ok(Ok(resp)) => resp,
@@ -294,6 +300,8 @@ mod reqres {
                     };
                     let src_id = src_id.as_deref();
                     let (func, receiver) = Func::post_binary(endpoint, src_id, payload);
+
+                    // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
 
                     if sender.send(func).is_ok() {
                         match timeout(Self::get_timeout_dur(), receiver).await {
