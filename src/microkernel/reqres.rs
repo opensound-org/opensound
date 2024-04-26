@@ -331,8 +331,8 @@ impl FuncGateway {
 struct SysApi;
 
 impl SysApi {
-    fn index() -> &'static str {
-        "OpenSound HttpServer Up & Running!"
+    fn index(backend: &str) -> String {
+        format!("OpenSound HttpServer({}) is Up & Running!", backend)
     }
 
     fn hello() -> &'static str {
