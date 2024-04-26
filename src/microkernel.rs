@@ -6,10 +6,13 @@ mod reqres {
     use http::StatusCode;
     use serde_json::Value;
     use std::{collections::HashMap, sync::Arc};
-    use tokio::sync::{
-        mpsc::UnboundedSender,
-        oneshot::{self, Receiver, Sender},
-        RwLock,
+    use tokio::{
+        sync::{
+            mpsc::UnboundedSender,
+            oneshot::{self, Receiver, Sender},
+            RwLock,
+        },
+        time::{timeout, Duration},
     };
 
     trait Resp {
@@ -188,10 +191,10 @@ mod reqres {
                     let (func, receiver) = Func::get_query(endpoint, src_id, query);
 
                     if sender.send(func).is_ok() {
-                        if let Ok(resp) = receiver.await {
-                            resp
-                        } else {
-                            (None, StatusCode::BAD_GATEWAY)
+                        match timeout(Self::get_timeout_dur(), receiver).await {
+                            Ok(Ok(resp)) => resp,
+                            Ok(Err(_)) => (None, StatusCode::BAD_GATEWAY),
+                            Err(_) => (None, StatusCode::GATEWAY_TIMEOUT),
                         }
                     } else {
                         (None, StatusCode::NOT_FOUND)
@@ -223,10 +226,10 @@ mod reqres {
                     let (func, receiver) = Func::post_json(endpoint, src_id, payload);
 
                     if sender.send(func).is_ok() {
-                        if let Ok(resp) = receiver.await {
-                            resp
-                        } else {
-                            (None, StatusCode::BAD_GATEWAY)
+                        match timeout(Self::get_timeout_dur(), receiver).await {
+                            Ok(Ok(resp)) => resp,
+                            Ok(Err(_)) => (None, StatusCode::BAD_GATEWAY),
+                            Err(_) => (None, StatusCode::GATEWAY_TIMEOUT),
                         }
                     } else {
                         (None, StatusCode::NOT_FOUND)
@@ -258,10 +261,10 @@ mod reqres {
                     let (func, receiver) = Func::post_text(endpoint, src_id, payload);
 
                     if sender.send(func).is_ok() {
-                        if let Ok(resp) = receiver.await {
-                            resp
-                        } else {
-                            (None, StatusCode::BAD_GATEWAY)
+                        match timeout(Self::get_timeout_dur(), receiver).await {
+                            Ok(Ok(resp)) => resp,
+                            Ok(Err(_)) => (None, StatusCode::BAD_GATEWAY),
+                            Err(_) => (None, StatusCode::GATEWAY_TIMEOUT),
                         }
                     } else {
                         (None, StatusCode::NOT_FOUND)
@@ -293,10 +296,10 @@ mod reqres {
                     let (func, receiver) = Func::post_binary(endpoint, src_id, payload);
 
                     if sender.send(func).is_ok() {
-                        if let Ok(resp) = receiver.await {
-                            resp
-                        } else {
-                            (None, StatusCode::BAD_GATEWAY)
+                        match timeout(Self::get_timeout_dur(), receiver).await {
+                            Ok(Ok(resp)) => resp,
+                            Ok(Err(_)) => (None, StatusCode::BAD_GATEWAY),
+                            Err(_) => (None, StatusCode::GATEWAY_TIMEOUT),
                         }
                     } else {
                         (None, StatusCode::NOT_FOUND)
@@ -308,6 +311,16 @@ mod reqres {
 
         async fn get_sender(&self, id: &str) -> Option<UnboundedSender<Func>> {
             self.0.read().await.get(id).cloned()
+        }
+
+        #[cfg(debug_assertions)]
+        fn get_timeout_dur() -> Duration {
+            Duration::from_secs_f64(30.0)
+        }
+
+        #[cfg(not(debug_assertions))]
+        fn get_timeout_dur() -> Duration {
+            Duration::from_secs_f64(3.0)
         }
     }
 }
