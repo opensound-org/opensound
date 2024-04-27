@@ -40,8 +40,8 @@ tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["chrono"] }
 uuid = { version = "1.8.0", features = ["v4", "fast-rng"] }
 
-# Optional web server frameworks for the kernel
-# 供内核选配的Web服务器框架
+# Optional web server frameworks for the MicroKernel
+# 供微内核选配的Web服务器框架
 actix-web = { version = "4.5.1", optional = true }
 axum = { version = "0.7.5", optional = true }
 ntex = { version = "1.2.1", features = ["tokio"], optional = true }
