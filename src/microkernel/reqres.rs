@@ -328,18 +328,18 @@ impl FuncGateway {
     }
 }
 
-struct SysApi;
+pub struct SysApi;
 
 impl SysApi {
-    fn index(backend: &str) -> String {
+    pub fn index(backend: &str) -> String {
         format!("OpenSound HttpServer({}) is Up & Running!", backend)
     }
 
-    fn hello() -> &'static str {
+    pub fn hello() -> &'static str {
         "Hello, world!"
     }
 
-    fn version() -> Value {
+    pub fn version() -> Value {
         json!({
             "version": crate::VERSION
         })
