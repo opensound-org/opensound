@@ -54,7 +54,7 @@ viz = { version = "0.8.4", optional = true }
 warp = { version = "0.3.7", optional = true }
 
 [features]
-default = ["salvo"]
+default = ["axum"]
 actix-web = ["dep:actix-web"]
 axum = ["dep:axum"]
 ntex = ["dep:ntex", "dep:socket2"]
