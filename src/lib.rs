@@ -36,8 +36,8 @@ pub mod gadgets {
 }
 
 mod microkernel {
-    mod main;
-    pub use main::*;
+    mod init;
+    pub use init::*;
 
     #[allow(dead_code)]
     mod reqres;
@@ -55,5 +55,5 @@ use common::{ostp, CommonRes};
 /// 默认启动过程入口
 pub async fn boot_default() -> CommonRes {
     ostp::install_default();
-    microkernel::main().await
+    microkernel::launch().await
 }
