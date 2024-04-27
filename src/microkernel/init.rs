@@ -1,14 +1,6 @@
 use crate::common::{ostp, CommonRes};
 
-pub async fn launch() -> CommonRes {
-    ostp::emit::debug(
-        "Hello, world!",
-        Some("你好，世界！"),
-        "microkernel",
-        "main",
-        None,
-    );
-
+async fn _ws() -> CommonRes {
     use futures::{SinkExt, StreamExt};
     use tokio::net::TcpListener;
     use tokio_tungstenite::{accept_hdr_async, tungstenite::handshake::server::Request};
@@ -37,4 +29,15 @@ pub async fn launch() -> CommonRes {
             }
         });
     }
+}
+
+pub async fn launch() -> CommonRes {
+    ostp::emit::debug(
+        "Hello, world!",
+        Some("你好，世界！"),
+        "microkernel",
+        "main",
+        None,
+    );
+    Ok(())
 }
