@@ -1,7 +1,7 @@
 use crate::common::token::token_to_gadget_id;
 use http::StatusCode;
 use serde_json::{json, Value};
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::HashMap, net::SocketAddr, sync::Arc};
 use tokio::{
     sync::{
         mpsc::UnboundedSender,
@@ -18,6 +18,7 @@ trait Resp {
 
 struct Common {
     pub endpoint: String,
+    pub src_addr: SocketAddr,
     pub src_id: Option<String>,
 }
 
@@ -87,6 +88,7 @@ enum Func {
 impl Func {
     fn get_query(
         endpoint: &str,
+        src_addr: SocketAddr,
         src_id: Option<&str>,
         query: Option<HashMap<String, String>>,
     ) -> (Self, Receiver<(Option<String>, StatusCode)>) {
@@ -95,6 +97,7 @@ impl Func {
             Self::GetQuery(GetQuery {
                 common: Common {
                     endpoint: endpoint.into(),
+                    src_addr,
                     src_id: src_id.map(From::from),
                 },
                 query,
@@ -106,6 +109,7 @@ impl Func {
 
     fn post_json(
         endpoint: &str,
+        src_addr: SocketAddr,
         src_id: Option<&str>,
         payload: Value,
     ) -> (Self, Receiver<(Option<Value>, StatusCode)>) {
@@ -114,6 +118,7 @@ impl Func {
             Self::PostJSON(PostJSON {
                 common: Common {
                     endpoint: endpoint.into(),
+                    src_addr,
                     src_id: src_id.map(From::from),
                 },
                 payload,
@@ -125,6 +130,7 @@ impl Func {
 
     fn post_text(
         endpoint: &str,
+        src_addr: SocketAddr,
         src_id: Option<&str>,
         payload: &str,
     ) -> (Self, Receiver<(Option<String>, StatusCode)>) {
@@ -133,6 +139,7 @@ impl Func {
             Self::PostText(PostText {
                 common: Common {
                     endpoint: endpoint.into(),
+                    src_addr,
                     src_id: src_id.map(From::from),
                 },
                 payload: payload.into(),
@@ -144,6 +151,7 @@ impl Func {
 
     fn post_binary(
         endpoint: &str,
+        src_addr: SocketAddr,
         src_id: Option<&str>,
         payload: &[u8],
     ) -> (Self, Receiver<(Option<Vec<u8>>, StatusCode)>) {
@@ -152,6 +160,7 @@ impl Func {
             Self::PostBinary(PostBinary {
                 common: Common {
                     endpoint: endpoint.into(),
+                    src_addr,
                     src_id: src_id.map(From::from),
                 },
                 payload: payload.into(),
@@ -169,6 +178,7 @@ impl FuncGateway {
         &self,
         id: &str,
         endpoint: &str,
+        src_addr: SocketAddr,
         token: Option<&str>,
         query: Option<HashMap<String, String>>,
     ) -> (Option<String>, StatusCode) {
@@ -184,9 +194,9 @@ impl FuncGateway {
                     None
                 };
                 let src_id = src_id.as_deref();
-                let (func, receiver) = Func::get_query(endpoint, src_id, query);
+                let (func, receiver) = Func::get_query(endpoint, src_addr, src_id, query);
 
-                // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
+                // __todo__: Firewall & Existence & AccessControlRegistry (src_addr::src_id -> id/endpoint)
 
                 if sender.send(func).is_ok() {
                     match timeout(Self::get_timeout_dur(), receiver).await {
@@ -206,6 +216,7 @@ impl FuncGateway {
         &self,
         id: &str,
         endpoint: &str,
+        src_addr: SocketAddr,
         token: Option<&str>,
         payload: Value,
     ) -> (Option<Value>, StatusCode) {
@@ -221,9 +232,9 @@ impl FuncGateway {
                     None
                 };
                 let src_id = src_id.as_deref();
-                let (func, receiver) = Func::post_json(endpoint, src_id, payload);
+                let (func, receiver) = Func::post_json(endpoint, src_addr, src_id, payload);
 
-                // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
+                // __todo__: Firewall & Existence & AccessControlRegistry (src_addr::src_id -> id/endpoint)
 
                 if sender.send(func).is_ok() {
                     match timeout(Self::get_timeout_dur(), receiver).await {
@@ -243,6 +254,7 @@ impl FuncGateway {
         &self,
         id: &str,
         endpoint: &str,
+        src_addr: SocketAddr,
         token: Option<&str>,
         payload: &str,
     ) -> (Option<String>, StatusCode) {
@@ -258,9 +270,9 @@ impl FuncGateway {
                     None
                 };
                 let src_id = src_id.as_deref();
-                let (func, receiver) = Func::post_text(endpoint, src_id, payload);
+                let (func, receiver) = Func::post_text(endpoint, src_addr, src_id, payload);
 
-                // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
+                // __todo__: Firewall & Existence & AccessControlRegistry (src_addr::src_id -> id/endpoint)
 
                 if sender.send(func).is_ok() {
                     match timeout(Self::get_timeout_dur(), receiver).await {
@@ -280,6 +292,7 @@ impl FuncGateway {
         &self,
         id: &str,
         endpoint: &str,
+        src_addr: SocketAddr,
         token: Option<&str>,
         payload: &[u8],
     ) -> (Option<Vec<u8>>, StatusCode) {
@@ -295,9 +308,9 @@ impl FuncGateway {
                     None
                 };
                 let src_id = src_id.as_deref();
-                let (func, receiver) = Func::post_binary(endpoint, src_id, payload);
+                let (func, receiver) = Func::post_binary(endpoint, src_addr, src_id, payload);
 
-                // __todo__: Existence & AccessControlRegistry (src_id -> id/endpoint)
+                // __todo__: Firewall & Existence & AccessControlRegistry (src_addr::src_id -> id/endpoint)
 
                 if sender.send(func).is_ok() {
                     match timeout(Self::get_timeout_dur(), receiver).await {
