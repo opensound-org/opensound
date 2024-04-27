@@ -24,7 +24,7 @@ async fn version() -> Json<Value> {
 
 async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
     let server = HttpServer::new(|| App::new().service(index).service(hello).service(version))
-        .bind((Ipv4Addr::LOCALHOST, port.unwrap_or(0)))?;
+        .bind((Ipv4Addr::UNSPECIFIED, port.unwrap_or(0)))?;
     let addr = server.addrs()[0];
     let fut = server.run();
 

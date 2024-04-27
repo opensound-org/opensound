@@ -28,7 +28,7 @@ async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), a
         .route("/", get(index))
         .route("/api/v1/sys/hello", get(hello))
         .route("/api/v1/sys/version", get(version));
-    let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, port.unwrap_or(0))).await?;
+    let listener = TcpListener::bind((Ipv4Addr::UNSPECIFIED, port.unwrap_or(0))).await?;
     let addr = listener.local_addr().unwrap();
     let fut = axum::serve(listener, router).into_future();
 
