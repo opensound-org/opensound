@@ -20,8 +20,8 @@ pub mod common {
     /// Gadget Token的计算
     pub mod token;
 
-    /// Result<(), Box<dyn std::error::Error + Send + Sync>>
-    pub type CommonRes = Result<(), Box<dyn std::error::Error + Send + Sync>>;
+    /// Result<(), anyhow::Error>
+    pub type CommonRes = Result<(), anyhow::Error>;
 }
 /// The `Gadget` concept
 ///
