@@ -39,8 +39,8 @@ pub struct MicroKernel {
 }
 
 impl MicroKernel {
-    pub async fn launch(port: Option<u16>) -> Result<Self, anyhow::Error> {
-        let (_http_port, http_server) = Self::launch_http_server(port).await?;
+    pub async fn launch(http_port: Option<u16>) -> Result<Self, anyhow::Error> {
+        let (_http_port, http_server) = Self::launch_http_server(http_port).await?;
         Ok(Self {
             _http_port,
             http_server,
