@@ -45,120 +45,22 @@ mod microkernel {
     pub use init::*;
 
     mod backends {
-        cfg_if::cfg_if! {
-            if #[cfg(not(any(
-                feature = "actix-web",
-                feature = "axum",
-                feature = "ntex",
-                feature = "poem",
-                feature = "rocket",
-                feature = "salvo",
-                feature = "viz",
-                feature = "warp",
-            )))] {
-                compile_error!("One and only one of the following features can be enabled: \"actix-web\", \"axum\", \"ntex\", \"poem\", \"rocket\", \"salvo\", \"viz\", \"warp\".");
-                compile_error!("You haven't enabled any of them.");
-            }
-            else if #[cfg(all(
-                feature = "actix-web",
-                not(feature = "axum"),
-                not(feature = "ntex"),
-                not(feature = "poem"),
-                not(feature = "rocket"),
-                not(feature = "salvo"),
-                not(feature = "viz"),
-                not(feature = "warp"),
-            ))] {
-                pub mod actix_web;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                feature = "axum",
-                not(feature = "ntex"),
-                not(feature = "poem"),
-                not(feature = "rocket"),
-                not(feature = "salvo"),
-                not(feature = "viz"),
-                not(feature = "warp"),
-            ))] {
-                pub mod axum;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                not(feature = "axum"),
-                feature = "ntex",
-                not(feature = "poem"),
-                not(feature = "rocket"),
-                not(feature = "salvo"),
-                not(feature = "viz"),
-                not(feature = "warp"),
-            ))] {
-                pub mod ntex;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                not(feature = "axum"),
-                not(feature = "ntex"),
-                feature = "poem",
-                not(feature = "rocket"),
-                not(feature = "salvo"),
-                not(feature = "viz"),
-                not(feature = "warp"),
-            ))] {
-                pub mod poem;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                not(feature = "axum"),
-                not(feature = "ntex"),
-                not(feature = "poem"),
-                feature = "rocket",
-                not(feature = "salvo"),
-                not(feature = "viz"),
-                not(feature = "warp"),
-            ))] {
-                pub mod rocket;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                not(feature = "axum"),
-                not(feature = "ntex"),
-                not(feature = "poem"),
-                not(feature = "rocket"),
-                feature = "salvo",
-                not(feature = "viz"),
-                not(feature = "warp"),
-            ))] {
-                pub mod salvo;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                not(feature = "axum"),
-                not(feature = "ntex"),
-                not(feature = "poem"),
-                not(feature = "rocket"),
-                not(feature = "salvo"),
-                feature = "viz",
-                not(feature = "warp"),
-            ))] {
-                pub mod viz;
-            }
-            else if #[cfg(all(
-                not(feature = "actix-web"),
-                not(feature = "axum"),
-                not(feature = "ntex"),
-                not(feature = "poem"),
-                not(feature = "rocket"),
-                not(feature = "salvo"),
-                not(feature = "viz"),
-                feature = "warp",
-            ))] {
-                pub mod warp;
-            } else {
-                compile_error!("One and only one of the following features can be enabled: \"actix-web\", \"axum\", \"ntex\", \"poem\", \"rocket\", \"salvo\", \"viz\", \"warp\".");
-                compile_error!("You have multiple of them enabled.");
-            }
-        }
+        #[cfg(feature = "actix-web")]
+        pub mod actix_web;
+        #[cfg(feature = "axum")]
+        pub mod axum;
+        #[cfg(feature = "ntex")]
+        pub mod ntex;
+        #[cfg(feature = "poem")]
+        pub mod poem;
+        #[cfg(feature = "rocket")]
+        pub mod rocket;
+        #[cfg(feature = "salvo")]
+        pub mod salvo;
+        #[cfg(feature = "viz")]
+        pub mod viz;
+        #[cfg(feature = "warp")]
+        pub mod warp;
     }
 
     #[allow(dead_code)]
