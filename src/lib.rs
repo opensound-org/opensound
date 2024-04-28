@@ -72,13 +72,30 @@ mod microkernel {
 /// 带“v”前缀的版本号常量
 pub const VERSION: &'static str = concat!("v", clap::crate_version!());
 
+use clap::Args;
 use common::{ostp, CommonRes};
 use microkernel::MicroKernel;
 
-/// Default boot procedure entry
+/// Boot arguments
 ///
-/// 默认启动过程入口
-pub async fn boot_default() -> CommonRes {
+/// 启动参数
+///
+/// Can be put into your command line program and used as [clap](https://crates.io/crates/clap)'s [Args](https://docs.rs/clap/latest/clap/trait.Args.html).
+///
+/// 可以放到您的命令行程序中作为[clap](https://crates.io/crates/clap)的[Args](https://docs.rs/clap/latest/clap/trait.Args.html)使用。
+#[derive(Args, Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+pub struct BootArgs {
+    /// The port used by the HttpServer. If not specified, it defaults to a random port.
+    ///
+    /// HttpServer使用的端口，如果不指定，则默认使用随机端口。
+    #[arg(long, long_help = None)]
+    pub http_port: Option<u16>,
+}
+
+/// Main boot procedure entry
+///
+/// 主启动过程入口
+pub async fn boot(args: BootArgs) -> CommonRes {
     ostp::install_default();
-    MicroKernel::launch(None).await?.join().await
+    MicroKernel::launch(args.http_port).await?.join().await
 }
