@@ -41,7 +41,24 @@ pub struct MicroKernel {
 
 impl MicroKernel {
     pub async fn launch(port: Option<u16>) -> Result<Self, anyhow::Error> {
-        let (_http_port, http_server) = Self::launch_backend(backends::axum::ignite(port).await)?;
+        #[cfg(feature = "salvo")]
+        let ignite = backends::salvo::ignite;
+        #[cfg(feature = "poem")]
+        let ignite = backends::poem::ignite;
+        #[cfg(feature = "actix-web")]
+        let ignite = backends::actix_web::ignite;
+        #[cfg(feature = "axum")]
+        let ignite = backends::axum::ignite;
+        #[cfg(feature = "rocket")]
+        let ignite = backends::rocket::ignite;
+        #[cfg(feature = "warp")]
+        let ignite = backends::warp::ignite;
+        #[cfg(feature = "viz")]
+        let ignite = backends::viz::ignite;
+        #[cfg(feature = "ntex")]
+        let ignite = backends::ntex::ignite;
+
+        let (_http_port, http_server) = Self::launch_backend(ignite(port).await)?;
         Ok(Self {
             _http_port,
             http_server,
