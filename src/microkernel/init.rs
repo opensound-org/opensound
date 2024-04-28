@@ -1,6 +1,5 @@
 use super::backends;
-use crate::common::{ostp, CommonFut, CommonRes};
-use std::net::SocketAddr;
+use crate::common::{ostp, CommonRes};
 use tokio::task::JoinHandle;
 
 async fn _ws() -> CommonRes {
@@ -41,6 +40,20 @@ pub struct MicroKernel {
 
 impl MicroKernel {
     pub async fn launch(port: Option<u16>) -> Result<Self, anyhow::Error> {
+        let (_http_port, http_server) = Self::launch_http_server(port).await?;
+        Ok(Self {
+            _http_port,
+            http_server,
+        })
+    }
+
+    pub async fn join(self) -> CommonRes {
+        self.http_server.await.unwrap()
+    }
+
+    async fn launch_http_server(
+        port: Option<u16>,
+    ) -> Result<(u16, JoinHandle<CommonRes>), anyhow::Error> {
         #[cfg(feature = "salvo")]
         let ignite = backends::salvo::ignite;
         #[cfg(feature = "poem")]
@@ -58,20 +71,7 @@ impl MicroKernel {
         #[cfg(feature = "ntex")]
         let ignite = backends::ntex::ignite;
 
-        let (_http_port, http_server) = Self::launch_backend(ignite(port).await)?;
-        Ok(Self {
-            _http_port,
-            http_server,
-        })
-    }
-
-    pub async fn join(self) -> CommonRes {
-        self.http_server.await.unwrap()
-    }
-
-    fn launch_backend(
-        (backend, res): (&'static str, Result<(SocketAddr, CommonFut), anyhow::Error>),
-    ) -> Result<(u16, JoinHandle<CommonRes>), anyhow::Error> {
+        let (backend, res) = ignite(port).await;
         match res {
             Ok((addr, future)) => {
                 let message_en = format!("OpenSound HttpServer({}) launched at: {}", backend, addr);
