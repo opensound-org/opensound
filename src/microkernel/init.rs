@@ -74,8 +74,11 @@ impl MicroKernel {
     ) -> Result<(u16, JoinHandle<CommonRes>), anyhow::Error> {
         match res {
             Ok((addr, future)) => {
-                let message_en = format!("{} launched at: {}", backend, addr);
-                let message_zh = Some(format!("{}启动于：{}", backend, addr));
+                let message_en = format!("OpenSound HttpServer({}) launched at: {}", backend, addr);
+                let message_zh = Some(format!(
+                    "OpenSound HttpServer（{}）启动于：{}",
+                    backend, addr
+                ));
                 let message_zh = message_zh.as_deref();
                 ostp::emit::info(&message_en, message_zh, "sys", "launch", None);
 
@@ -85,8 +88,8 @@ impl MicroKernel {
                 Ok((http_port, http_server))
             }
             Err(err) => {
-                let message_en = format!("{} launch failed! Reason: {}", backend, err);
-                let message_zh = Some(format!("{}启动失败！原因：{}", backend, err));
+                let message_en = format!("{} backend launch failed! Reason: {}", backend, err);
+                let message_zh = Some(format!("{}后端启动失败！原因：{}", backend, err));
                 let message_zh = message_zh.as_deref();
                 ostp::emit::error(&message_en, message_zh, "sys", "launch", None);
                 Err(err)
