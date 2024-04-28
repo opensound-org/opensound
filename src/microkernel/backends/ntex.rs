@@ -28,6 +28,7 @@ async fn version() -> Json<Value> {
 async fn launch(listener: TcpListener, shutdown: oneshot::Receiver<()>) -> CommonRes {
     let fut = HttpServer::new(|| App::new().service(index).service(hello).service(version))
         .listen(listener)?
+        .disable_signals()
         .run();
 
     // The implementation of "Graceful Shutdown" needs to be optimized here.

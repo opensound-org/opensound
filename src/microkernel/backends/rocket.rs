@@ -1,7 +1,13 @@
 use super::super::reqres::SysApi;
 use crate::common::CommonFut;
 use futures::FutureExt;
-use rocket::{config::LogLevel, fairing::AdHoc, get, routes, serde::json::Json, Config};
+use rocket::{
+    config::{LogLevel, Shutdown},
+    fairing::AdHoc,
+    get, routes,
+    serde::json::Json,
+    Config,
+};
 use serde_json::Value;
 use std::net::{Ipv4Addr, SocketAddr};
 use tokio::sync::oneshot;
@@ -29,6 +35,10 @@ async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), a
     let launch = rocket::custom(Config {
         address: Ipv4Addr::UNSPECIFIED.into(),
         port: port.unwrap_or(0),
+        shutdown: Shutdown {
+            ctrlc: false,
+            ..Default::default()
+        },
         log_level: LogLevel::Off,
         ..Default::default()
     })
