@@ -64,3 +64,6 @@ rocket = ["dep:rocket"]
 warp = ["dep:warp"]
 viz = ["dep:viz"]
 ntex = ["dep:ntex", "dep:socket2"]
+
+[build-dependencies]
+sys-locale = "0.3.1"
