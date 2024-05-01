@@ -7,7 +7,7 @@ use warp::{reply::json, Filter};
 const NAME: &'static str = "Warp";
 
 async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
-    let index = warp::path!().map(|| SysCtrl::index(NAME));
+    let index = warp::path!().map(|| SysCtrl::http_index(NAME));
     let hello = warp::path!("api" / "v1" / "sys" / "hello").map(|| SysCtrl::hello());
     let version = warp::path!("api" / "v1" / "sys" / "version").map(|| json(&SysCtrl::version()));
     let routes = warp::get().and(index.or(hello).or(version));

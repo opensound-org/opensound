@@ -11,7 +11,7 @@ const NAME: &'static str = "Ntex";
 
 #[get("/")]
 async fn index() -> String {
-    SysCtrl::index(NAME)
+    SysCtrl::http_index(NAME)
 }
 
 #[get("/api/v1/sys/hello")]

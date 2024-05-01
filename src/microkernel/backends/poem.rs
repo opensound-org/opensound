@@ -14,7 +14,7 @@ const NAME: &'static str = "Poem";
 
 #[handler]
 async fn index() -> String {
-    SysCtrl::index(NAME)
+    SysCtrl::http_index(NAME)
 }
 
 #[handler]

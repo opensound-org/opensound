@@ -12,7 +12,7 @@ use tokio::net::TcpListener;
 const NAME: &'static str = "Axum";
 
 async fn index() -> String {
-    SysCtrl::index(NAME)
+    SysCtrl::http_index(NAME)
 }
 
 async fn hello() -> &'static str {

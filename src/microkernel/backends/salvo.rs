@@ -9,7 +9,7 @@ const NAME: &'static str = "Salvo";
 
 #[handler]
 async fn index() -> String {
-    SysCtrl::index(NAME)
+    SysCtrl::http_index(NAME)
 }
 
 #[handler]

@@ -16,7 +16,7 @@ const NAME: &'static str = "Rocket";
 
 #[get("/")]
 async fn index() -> String {
-    SysCtrl::index(NAME)
+    SysCtrl::http_index(NAME)
 }
 
 #[get("/api/v1/sys/hello")]

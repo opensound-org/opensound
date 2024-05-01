@@ -344,7 +344,7 @@ impl FuncGateway {
 pub struct SysCtrl;
 
 impl SysCtrl {
-    pub fn index(backend: &str) -> String {
+    pub fn http_index(backend: &str) -> String {
         format!("OpenSound HttpServer({}) is Up & Running!", backend)
     }
 

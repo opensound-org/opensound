@@ -12,7 +12,7 @@ use viz::{serve, types::Json, IntoHandler, Result, Router};
 const NAME: &'static str = "Viz";
 
 async fn index() -> Result<String> {
-    Ok(SysCtrl::index(NAME))
+    Ok(SysCtrl::http_index(NAME))
 }
 
 async fn hello() -> Result<&'static str> {
