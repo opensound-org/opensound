@@ -33,27 +33,13 @@ async fn _ws() -> CommonRes {
     }
 }
 
-pub struct MicroKernel {
-    _http_port: u16,
-    http_server: JoinHandle<CommonRes>,
+struct HttpServer {
+    _port: u16,
+    routine: JoinHandle<CommonRes>,
 }
 
-impl MicroKernel {
-    pub async fn launch(http_port: Option<u16>) -> Result<Self, anyhow::Error> {
-        let (_http_port, http_server) = Self::launch_http_server(http_port).await?;
-        Ok(Self {
-            _http_port,
-            http_server,
-        })
-    }
-
-    pub async fn join(self) -> CommonRes {
-        self.http_server.await.unwrap()
-    }
-
-    async fn launch_http_server(
-        port: Option<u16>,
-    ) -> Result<(u16, JoinHandle<CommonRes>), anyhow::Error> {
+impl HttpServer {
+    async fn launch(port: Option<u16>) -> Result<Self, anyhow::Error> {
         #[cfg(feature = "salvo")]
         let ignite = backends::salvo::ignite;
         #[cfg(feature = "poem")]
@@ -82,10 +68,10 @@ impl MicroKernel {
                 let message_zh = message_zh.as_deref();
                 ostp::emit::info(&message_en, message_zh, "sys", "launch", None);
 
-                let http_port = addr.port();
-                let http_server = tokio::spawn(future);
+                let _port = addr.port();
+                let routine = tokio::spawn(future);
 
-                Ok((http_port, http_server))
+                Ok(Self { _port, routine })
             }
             Err(err) => {
                 let message_en = format!("{} backend launch failed! Reason: {}", backend, err);
@@ -95,5 +81,20 @@ impl MicroKernel {
                 Err(err)
             }
         }
+    }
+}
+
+pub struct MicroKernel {
+    http_server: HttpServer,
+}
+
+impl MicroKernel {
+    pub async fn launch(http_port: Option<u16>) -> Result<Self, anyhow::Error> {
+        let http_server = HttpServer::launch(http_port).await?;
+        Ok(Self { http_server })
+    }
+
+    pub async fn join(self) -> CommonRes {
+        self.http_server.routine.await.unwrap()
     }
 }
