@@ -1,4 +1,4 @@
-use super::super::reqres::SysApi;
+use super::super::reqres::SysCtrl;
 use crate::common::CommonFut;
 use axum::{response::Json, routing::get, Router};
 use futures::FutureExt;
@@ -12,15 +12,15 @@ use tokio::net::TcpListener;
 const NAME: &'static str = "Axum";
 
 async fn index() -> String {
-    SysApi::index(NAME)
+    SysCtrl::index(NAME)
 }
 
 async fn hello() -> &'static str {
-    SysApi::hello()
+    SysCtrl::hello()
 }
 
 async fn version() -> Json<Value> {
-    Json(SysApi::version())
+    Json(SysCtrl::version())
 }
 
 async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {

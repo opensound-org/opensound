@@ -1,4 +1,4 @@
-use super::super::reqres::SysApi;
+use super::super::reqres::SysCtrl;
 use crate::common::CommonFut;
 use futures::FutureExt;
 use rocket::{
@@ -16,17 +16,17 @@ const NAME: &'static str = "Rocket";
 
 #[get("/")]
 async fn index() -> String {
-    SysApi::index(NAME)
+    SysCtrl::index(NAME)
 }
 
 #[get("/api/v1/sys/hello")]
 async fn hello() -> &'static str {
-    SysApi::hello()
+    SysCtrl::hello()
 }
 
 #[get("/api/v1/sys/version")]
 async fn version() -> Json<Value> {
-    Json(SysApi::version())
+    Json(SysCtrl::version())
 }
 
 async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {

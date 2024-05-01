@@ -1,4 +1,4 @@
-use super::super::reqres::SysApi;
+use super::super::reqres::SysCtrl;
 use crate::common::{CommonFut, CommonRes};
 use futures::FutureExt;
 use ntex::web::{get, types::Json, App, HttpServer};
@@ -11,17 +11,17 @@ const NAME: &'static str = "Ntex";
 
 #[get("/")]
 async fn index() -> String {
-    SysApi::index(NAME)
+    SysCtrl::index(NAME)
 }
 
 #[get("/api/v1/sys/hello")]
 async fn hello() -> &'static str {
-    SysApi::hello()
+    SysCtrl::hello()
 }
 
 #[get("/api/v1/sys/version")]
 async fn version() -> Json<Value> {
-    Json(SysApi::version())
+    Json(SysCtrl::version())
 }
 
 #[ntex::main]

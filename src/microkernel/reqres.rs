@@ -341,9 +341,9 @@ impl FuncGateway {
     }
 }
 
-pub struct SysApi;
+pub struct SysCtrl;
 
-impl SysApi {
+impl SysCtrl {
     pub fn index(backend: &str) -> String {
         format!("OpenSound HttpServer({}) is Up & Running!", backend)
     }
@@ -365,6 +365,6 @@ mod tests {
 
     #[test]
     fn version() {
-        assert_eq!(SysApi::version().to_string(), "{\"version\":\"v0.0.6\"}");
+        assert_eq!(SysCtrl::version().to_string(), "{\"version\":\"v0.0.6\"}");
     }
 }

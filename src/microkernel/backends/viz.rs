@@ -1,4 +1,4 @@
-use super::super::reqres::SysApi;
+use super::super::reqres::SysCtrl;
 use crate::common::CommonFut;
 use futures::FutureExt;
 use serde_json::Value;
@@ -12,15 +12,15 @@ use viz::{serve, types::Json, IntoHandler, Result, Router};
 const NAME: &'static str = "Viz";
 
 async fn index() -> Result<String> {
-    Ok(SysApi::index(NAME))
+    Ok(SysCtrl::index(NAME))
 }
 
 async fn hello() -> Result<&'static str> {
-    Ok(SysApi::hello())
+    Ok(SysCtrl::hello())
 }
 
 async fn version() -> Result<Json<Value>> {
-    Ok(Json(SysApi::version()))
+    Ok(Json(SysCtrl::version()))
 }
 
 async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
