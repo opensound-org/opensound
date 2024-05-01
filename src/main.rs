@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
 use opensound::{
     boot,
     common::{ostd::signal::disable_ctrlc, CommonRes},
@@ -16,6 +16,12 @@ use opensound::{
 enum Commands {
     /// Boot the API Server
     Boot(BootArgs),
+    #[command(flatten)]
+    Gadgets(Gadgets),
+}
+
+#[derive(Subcommand, Debug)]
+enum Gadgets {
     #[command(hide = true)]
     Timer,
     #[command(hide = true)]
@@ -28,7 +34,9 @@ async fn main() -> CommonRes {
 
     match Commands::parse() {
         Commands::Boot(args) => boot(args).await,
-        Commands::Timer => timer::main().await,
-        Commands::Uuid => uuid::main().await,
+        Commands::Gadgets(cmd) => match cmd {
+            Gadgets::Timer => timer::main().await,
+            Gadgets::Uuid => uuid::main().await,
+        },
     }
 }
