@@ -1,6 +1,12 @@
-use super::backends;
+use super::{
+    backends,
+    reqres::{SysCtrl, SysEvent, SysEventRecv},
+};
 use crate::common::{ostp, CommonRes};
-use tokio::task::JoinHandle;
+use tokio::{
+    sync::oneshot::{self, Sender},
+    task::JoinHandle,
+};
 
 async fn _ws() -> CommonRes {
     use futures::{SinkExt, StreamExt};
@@ -35,11 +41,12 @@ async fn _ws() -> CommonRes {
 
 struct HttpServer {
     _port: u16,
+    graceful_shutdown: Sender<()>,
     routine: JoinHandle<CommonRes>,
 }
 
 impl HttpServer {
-    async fn launch(port: Option<u16>) -> Result<Self, anyhow::Error> {
+    async fn launch(port: Option<u16>, ctrl: SysCtrl) -> Result<Self, anyhow::Error> {
         #[cfg(feature = "salvo")]
         let ignite = backends::salvo::ignite;
         #[cfg(feature = "poem")]
@@ -57,7 +64,9 @@ impl HttpServer {
         #[cfg(feature = "ntex")]
         let ignite = backends::ntex::ignite;
 
-        let (backend, res) = ignite(port).await;
+        let ctrl = Self::wrap_ctrl(ctrl);
+        let (s, r) = oneshot::channel();
+        let (backend, res) = ignite(port, ctrl, r).await;
         match res {
             Ok((addr, future)) => {
                 let message_en = format!("OpenSound HttpServer({}) launched at: {}", backend, addr);
@@ -66,35 +75,90 @@ impl HttpServer {
                     backend, addr
                 ));
                 let message_zh = message_zh.as_deref();
-                ostp::emit::info(&message_en, message_zh, "sys", "launch", None);
+                ostp::emit::info(&message_en, message_zh, "MicroKernel", "HttpServer", None);
 
                 let _port = addr.port();
+                let graceful_shutdown = s;
                 let routine = tokio::spawn(future);
 
-                Ok(Self { _port, routine })
+                Ok(Self {
+                    _port,
+                    graceful_shutdown,
+                    routine,
+                })
             }
             Err(err) => {
                 let message_en = format!("{} backend launch failed! Reason: {}", backend, err);
                 let message_zh = Some(format!("{}后端启动失败！原因：{}", backend, err));
                 let message_zh = message_zh.as_deref();
-                ostp::emit::error(&message_en, message_zh, "sys", "launch", None);
+                ostp::emit::error(&message_en, message_zh, "MicroKernel", "HttpServer", None);
                 Err(err)
             }
         }
+    }
+
+    #[cfg(debug_assertions)]
+    fn wrap_ctrl(ctrl: SysCtrl) -> Option<SysCtrl> {
+        Some(ctrl)
+    }
+
+    #[cfg(not(debug_assertions))]
+    fn wrap_ctrl(_ctrl: SysCtrl) -> Option<SysCtrl> {
+        None
+    }
+
+    fn _get_port(&self) -> u16 {
+        self._port
+    }
+
+    async fn graceful_shutdown(self) -> CommonRes {
+        self.graceful_shutdown.send(()).ok();
+        self.routine.await?
     }
 }
 
 pub struct MicroKernel {
     http_server: HttpServer,
+    sys_event_recv: SysEventRecv,
 }
 
 impl MicroKernel {
     pub async fn launch(http_port: Option<u16>) -> Result<Self, anyhow::Error> {
-        let http_server = HttpServer::launch(http_port).await?;
-        Ok(Self { http_server })
+        let (sys_ctrl, sys_event_recv) = SysCtrl::create_pair();
+        let http_server = HttpServer::launch(http_port, sys_ctrl).await?;
+
+        Ok(Self {
+            http_server,
+            sys_event_recv,
+        })
     }
 
-    pub async fn join(self) -> CommonRes {
-        self.http_server.routine.await.unwrap()
+    #[cfg(debug_assertions)]
+    pub const fn sys_ctrl_enabled(&self) -> bool {
+        true
+    }
+
+    #[cfg(not(debug_assertions))]
+    pub const fn sys_ctrl_enabled(&self) -> bool {
+        false
+    }
+
+    pub fn _get_http_port(&self) -> u16 {
+        self.http_server._get_port()
+    }
+
+    pub async fn sys_event(&mut self) -> SysEvent {
+        self.sys_event_recv.recv().await
+    }
+
+    pub async fn graceful_shutdown(self) -> CommonRes {
+        ostp::emit::info(
+            "Performing Graceful Shutdown on HttpServer",
+            Some("正在对HttpServer执行优雅停机"),
+            "MicroKernel",
+            "HttpServer",
+            None,
+        );
+        self.http_server.graceful_shutdown().await
     }
 }

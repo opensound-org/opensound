@@ -1,10 +1,10 @@
-use crate::common::token::token_to_gadget_id;
+use crate::common::{ostp, token::token_to_gadget_id};
 use http::StatusCode;
 use serde_json::{json, Value};
 use std::{collections::HashMap, net::SocketAddr, sync::Arc};
 use tokio::{
     sync::{
-        mpsc::UnboundedSender,
+        mpsc::{self, UnboundedReceiver, UnboundedSender},
         oneshot::{self, Receiver, Sender},
         RwLock,
     },
@@ -341,7 +341,37 @@ impl FuncGateway {
     }
 }
 
-pub struct SysCtrl;
+#[derive(Debug, Clone, Copy)]
+pub struct SysEvent(bool);
+
+impl SysEvent {
+    pub fn reboot() -> Self {
+        Self(true)
+    }
+
+    pub fn shutdown() -> Self {
+        Self(false)
+    }
+
+    pub fn should_reboot(&self) -> bool {
+        self.0
+    }
+
+    pub fn only_shutdown(&self) -> bool {
+        !self.should_reboot()
+    }
+}
+
+pub struct SysEventRecv(UnboundedReceiver<SysEvent>);
+
+impl SysEventRecv {
+    pub async fn recv(&mut self) -> SysEvent {
+        self.0.recv().await.unwrap_or(SysEvent::shutdown())
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct SysCtrl(UnboundedSender<SysEvent>);
 
 impl SysCtrl {
     pub fn http_index(backend: &str) -> String {
@@ -356,6 +386,35 @@ impl SysCtrl {
         json!({
             "version": crate::VERSION
         })
+    }
+
+    pub fn create_pair() -> (Self, SysEventRecv) {
+        let (s, r) = mpsc::unbounded_channel();
+        (Self(s), SysEventRecv(r))
+    }
+
+    pub fn trigger_shutdown(&self) -> &'static str {
+        ostp::emit::warn(
+            "Shutdown event triggered",
+            Some("触发了关闭事件"),
+            "MicroKernel",
+            "SysCtrl",
+            None,
+        );
+        self.0.send(SysEvent::shutdown()).ok();
+        "Shutdown event triggered!"
+    }
+
+    pub fn trigger_reboot(&self) -> &'static str {
+        ostp::emit::warn(
+            "Reboot event triggered",
+            Some("触发了重启事件"),
+            "MicroKernel",
+            "SysCtrl",
+            None,
+        );
+        self.0.send(SysEvent::reboot()).ok();
+        "Reboot event triggered!"
     }
 }
 

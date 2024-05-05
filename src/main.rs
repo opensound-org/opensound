@@ -30,13 +30,15 @@ enum Gadgets {
 
 #[tokio::main]
 async fn main() -> CommonRes {
-    disable_ctrlc();
-
     match Commands::parse() {
         Commands::Boot(args) => boot(args).await,
-        Commands::Gadgets(cmd) => match cmd {
-            Gadgets::Timer => timer::main().await,
-            Gadgets::Uuid => uuid::main().await,
-        },
+        Commands::Gadgets(cmd) => {
+            disable_ctrlc();
+
+            match cmd {
+                Gadgets::Timer => timer::main().await,
+                Gadgets::Uuid => uuid::main().await,
+            }
+        }
     }
 }
