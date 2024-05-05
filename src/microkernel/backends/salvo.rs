@@ -3,8 +3,10 @@ use crate::common::CommonFut;
 use futures::FutureExt;
 use salvo::prelude::*;
 use serde_json::Value;
-use std::net::{Ipv4Addr, SocketAddr};
-use tokio::sync::oneshot::Receiver;
+use std::{
+    future::Future,
+    net::{Ipv4Addr, SocketAddr},
+};
 
 const NAME: &'static str = "Salvo";
 
@@ -36,7 +38,7 @@ async fn reboot(depot: &Depot) -> &'static str {
 async fn ignite_internal(
     port: Option<u16>,
     ctrl: Option<SysCtrl>,
-    graceful_shutdown: Receiver<()>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
 ) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
     let mut sys = Router::with_path("api/v1/sys")
         .push(Router::with_path("hello").get(hello))
@@ -65,7 +67,7 @@ async fn ignite_internal(
     // 这里是Salvo优雅停机bug的workaround！
     // https://github.com/salvo-rs/salvo/issues/764
     tokio::spawn(async move {
-        graceful_shutdown.await.ok();
+        graceful_shutdown.await;
         handle.abort();
     });
 
@@ -78,7 +80,7 @@ async fn ignite_internal(
 pub async fn ignite(
     port: Option<u16>,
     ctrl: Option<SysCtrl>,
-    graceful_shutdown: Receiver<()>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
 ) -> (&'static str, Result<(SocketAddr, CommonFut), anyhow::Error>) {
     (NAME, ignite_internal(port, ctrl, graceful_shutdown).await)
 }

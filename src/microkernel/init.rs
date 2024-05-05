@@ -66,7 +66,10 @@ impl HttpServer {
 
         let ctrl = Self::wrap_ctrl(ctrl);
         let (s, r) = oneshot::channel();
-        let (backend, res) = ignite(port, ctrl, r).await;
+        let graceful_shutdown = async move {
+            r.await.ok();
+        };
+        let (backend, res) = ignite(port, ctrl, graceful_shutdown).await;
         match res {
             Ok((addr, future)) => {
                 let message_en = format!("OpenSound HttpServer({}) launched at: {}", backend, addr);
