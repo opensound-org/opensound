@@ -30,8 +30,8 @@ async fn version() -> Json<Value> {
 async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
     let route = Route::new()
         .at("/", get(index))
-        .at("/api/v1/hello", get(hello))
-        .at("/api/v1/version", get(version));
+        .at("/api/v1/sys/hello", get(hello))
+        .at("/api/v1/sys/version", get(version));
     let acceptor = TcpListener::bind((Ipv4Addr::UNSPECIFIED, port.unwrap_or(0)))
         .into_acceptor()
         .await?;
