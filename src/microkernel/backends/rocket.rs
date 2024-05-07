@@ -6,10 +6,13 @@ use rocket::{
     fairing::AdHoc,
     get, routes,
     serde::json::Json,
-    Config,
+    Config, State,
 };
 use serde_json::Value;
-use std::net::{Ipv4Addr, SocketAddr};
+use std::{
+    future::Future,
+    net::{Ipv4Addr, SocketAddr},
+};
 use tokio::sync::oneshot;
 
 const NAME: &'static str = "Rocket";
@@ -29,10 +32,24 @@ async fn version() -> Json<Value> {
     Json(SysCtrl::version())
 }
 
-async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
+#[get("/api/v1/sys/shutdown")]
+async fn shutdown(state: &State<SysCtrl>) -> &'static str {
+    state.trigger_shutdown()
+}
+
+#[get("/api/v1/sys/reboot")]
+async fn reboot(state: &State<SysCtrl>) -> &'static str {
+    state.trigger_reboot()
+}
+
+async fn ignite_internal(
+    port: Option<u16>,
+    ctrl: Option<SysCtrl>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
+) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
     let (addr_sender, addr_receiver) = oneshot::channel();
     let (err_sender, err_receiver) = oneshot::channel();
-    let launch = rocket::custom(Config {
+    let mut build = rocket::custom(Config {
         address: Ipv4Addr::UNSPECIFIED.into(),
         port: port.unwrap_or(0),
         shutdown: Shutdown {
@@ -50,10 +67,15 @@ async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), a
 
             addr_sender.send(addr).unwrap();
         })
-    }))
-    .ignite()
-    .await?
-    .launch();
+    }));
+
+    if let Some(ctrl) = ctrl {
+        build = build.mount("/", routes![shutdown, reboot]).manage(ctrl);
+    }
+
+    let ignite = build.ignite().await?;
+    let shutdown = ignite.shutdown();
+    let launch = ignite.launch();
     let fut = tokio::spawn(async move {
         if let Err(err) = launch.await {
             err_sender.send(err).ok();
@@ -65,11 +87,18 @@ async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), a
         Ok(err) = err_receiver => return Err(err)?,
     };
 
+    tokio::spawn(async move {
+        graceful_shutdown.await;
+        shutdown.notify();
+    });
+
     Ok((addr, async move { Ok(fut.await?) }.boxed()))
 }
 
 pub async fn ignite(
     port: Option<u16>,
+    ctrl: Option<SysCtrl>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
 ) -> (&'static str, Result<(SocketAddr, CommonFut), anyhow::Error>) {
-    (NAME, ignite_internal(port).await)
+    (NAME, ignite_internal(port, ctrl, graceful_shutdown).await)
 }
