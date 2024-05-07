@@ -68,4 +68,4 @@ ntex = ["dep:ntex", "dep:socket2"]
 sys-locale = "0.3.1"
 
 [patch.crates-io]
-hyper-util = { git = "https://github.com/hyperium/hyper-util.git" }
+hyper-util = { git = "https://github.com/hyperium/hyper-util.git", rev = "a77d866ff65a68ea5d048d058108552c39ec470d" }
