@@ -6,6 +6,7 @@ use serde_json::Value;
 use std::{
     future::Future,
     net::{Ipv4Addr, SocketAddr},
+    time::Duration,
 };
 
 const NAME: &'static str = "Salvo";
@@ -56,25 +57,16 @@ async fn ignite_internal(
         .try_bind()
         .await?;
     let addr = acceptor.local_addr()?;
+    let server = Server::new(acceptor);
+    let handle = server.handle();
+    let fut = server.serve(router);
 
-    // Here is a workaround for the Salvo graceful shutdown bug!
-    // 这里是Salvo优雅停机bug的workaround！
-    // https://github.com/salvo-rs/salvo/issues/764
-    let fut = tokio::spawn(Server::new(acceptor).serve(router));
-    let handle = fut.abort_handle();
-
-    // Here is a workaround for the Salvo graceful shutdown bug!
-    // 这里是Salvo优雅停机bug的workaround！
-    // https://github.com/salvo-rs/salvo/issues/764
     tokio::spawn(async move {
         graceful_shutdown.await;
-        handle.abort();
+        handle.stop_graceful(Some(Duration::from_secs(1)));
     });
 
-    // Here is a workaround for the Salvo graceful shutdown bug!
-    // 这里是Salvo优雅停机bug的workaround！
-    // https://github.com/salvo-rs/salvo/issues/764
-    Ok((addr, async move { Ok(fut.await.unwrap_or(())) }.boxed()))
+    Ok((addr, async move { Ok(fut.await) }.boxed()))
 }
 
 pub async fn ignite(
