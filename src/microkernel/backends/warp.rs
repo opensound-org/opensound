@@ -1,5 +1,5 @@
 use super::super::reqres::SysCtrl;
-use crate::common::CommonFut;
+use crate::common::{ostp, CommonFut};
 use futures::FutureExt;
 use std::{
     future::Future,
@@ -43,6 +43,14 @@ async fn ignite_internal(
         (Ipv4Addr::UNSPECIFIED, port.unwrap_or(0)),
         graceful_shutdown,
     )?;
+
+    ostp::emit::warn(
+        "There are some bugs in the current version of Warp backend, please use it with caution, or switch to another backend, or wait for the bug to be fixed!",
+        Some("当前版本的Warp后端存在一些bug，请谨慎使用，或切换至其它后端，或等待bug修复！"),
+        "MicroKernel",
+        "HttpServer",
+        Some("Warp"),
+    );
 
     Ok((addr, async move { Ok(fut.await) }.boxed()))
 }
