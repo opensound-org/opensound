@@ -1,11 +1,21 @@
 use super::super::reqres::SysCtrl;
 use crate::common::{CommonFut, CommonRes};
 use futures::FutureExt;
-use ntex::web::{get, types::Json, App, HttpServer};
+use ntex::{
+    time::Seconds,
+    web::{
+        get,
+        types::{Json, State},
+        App, HttpServer,
+    },
+};
 use serde_json::Value;
 use socket2::{Domain, Socket, Type};
-use std::net::{Ipv4Addr, SocketAddr, TcpListener, ToSocketAddrs};
-use tokio::{sync::oneshot, task::spawn_blocking};
+use std::{
+    future::Future,
+    net::{Ipv4Addr, SocketAddr, TcpListener, ToSocketAddrs},
+};
+use tokio::task::spawn_blocking;
 
 const NAME: &'static str = "Ntex";
 
@@ -24,19 +34,46 @@ async fn version() -> Json<Value> {
     Json(SysCtrl::version())
 }
 
-#[ntex::main]
-async fn launch(listener: TcpListener, shutdown: oneshot::Receiver<()>) -> CommonRes {
-    let fut = HttpServer::new(|| App::new().service(index).service(hello).service(version))
-        .listen(listener)?
-        .disable_signals()
-        .run();
+#[get("/api/v1/sys/shutdown")]
+async fn shutdown(state: State<SysCtrl>) -> &'static str {
+    state.trigger_shutdown()
+}
 
-    // The implementation of "Graceful Shutdown" needs to be optimized here.
-    // 此处需要优化“优雅停机”的实现。
-    tokio::select! {
-        _ = shutdown => Ok(()),
-        res = fut => Ok(res?),
-    }
+#[get("/api/v1/sys/reboot")]
+async fn reboot(state: State<SysCtrl>) -> &'static str {
+    state.trigger_reboot()
+}
+
+#[ntex::main]
+async fn launch(
+    listener: TcpListener,
+    ctrl: Option<SysCtrl>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
+) -> CommonRes {
+    let fut = HttpServer::new(move || {
+        let mut app = App::new().service(index).service(hello).service(version);
+
+        if let Some(ctrl) = ctrl.clone() {
+            app = app.state(ctrl).service(shutdown).service(reboot);
+        }
+
+        app
+    })
+    .listen(listener)?
+    .disable_signals()
+    .shutdown_timeout(Seconds::ONE)
+    .run();
+    let handle = fut.clone();
+
+    tokio::spawn(async move {
+        graceful_shutdown.await;
+
+        // There is no need for await, just await JoinHanle externally and that's it.
+        // 不需要await这玩意儿，直接在外部await JoinHanle就完事儿了
+        let _ = handle.stop(true);
+    });
+
+    Ok(fut.await?)
 }
 
 // Copied from ntex-server/src/net/builder.rs
@@ -88,23 +125,22 @@ fn bind2<A: ToSocketAddrs>(addr: A, backlog: Option<i32>) -> std::io::Result<Vec
     }
 }
 
-async fn ignite_internal(port: Option<u16>) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
+async fn ignite_internal(
+    port: Option<u16>,
+    ctrl: Option<SysCtrl>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
+) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
     let listener = bind2((Ipv4Addr::UNSPECIFIED, port.unwrap_or(0)), None)?.remove(0);
     let addr = listener.local_addr()?;
-
-    // The implementation of "Graceful Shutdown" needs to be optimized here.
-    // 此处需要优化“优雅停机”的实现。
-    let (shutdown_sender, shutdown_receiver) = oneshot::channel();
-    let fut = async move {
-        let _shutdown_sender = shutdown_sender;
-        spawn_blocking(move || launch(listener, shutdown_receiver)).await
-    };
+    let fut = spawn_blocking(move || launch(listener, ctrl, graceful_shutdown));
 
     Ok((addr, async move { Ok(fut.await??) }.boxed()))
 }
 
 pub async fn ignite(
     port: Option<u16>,
+    ctrl: Option<SysCtrl>,
+    graceful_shutdown: impl Future<Output = ()> + Send + 'static,
 ) -> (&'static str, Result<(SocketAddr, CommonFut), anyhow::Error>) {
-    (NAME, ignite_internal(port).await)
+    (NAME, ignite_internal(port, ctrl, graceful_shutdown).await)
 }
