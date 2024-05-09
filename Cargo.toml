@@ -65,5 +65,15 @@ ntex = ["dep:ntex", "dep:socket2"]
 [build-dependencies]
 sys-locale = "0.3.1"
 
+# Axum and Viz have a propagating bug caused by a "hyper-util" bug.
+# Now "hyper-util" has been updated on git, but it has not been released to crates.io yet. 
+# It needs to be patched temporarily.
+# For more information, see the issue link below:
+# 
+# Axum和Viz有一个由于“hyper-util”的bug导致的传播的bug。
+# 现“hyper-util”已在git上更新，但还没有发版至crates，现需临时给它打个补丁。
+# 更多信息见下方issue链接：
+#
+# https://github.com/opensound-org/opensound/issues/2
 [patch.crates-io]
 hyper-util = { git = "https://github.com/hyperium/hyper-util.git", rev = "a77d866ff65a68ea5d048d058108552c39ec470d" }
