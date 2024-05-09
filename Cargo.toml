@@ -51,7 +51,6 @@ rocket = { version = "0.5.0", features = ["json"], optional = true }
 salvo = { version = "0.67.2", features = ["affix"], optional = true }
 socket2 = { version = "0.5.6", optional = true }
 viz = { version = "0.8.4", optional = true }
-warp = { version = "0.3.7", optional = true }
 
 [features]
 default = ["salvo"]
@@ -60,7 +59,6 @@ poem = ["dep:poem"]
 actix-web = ["dep:actix-web"]
 axum = ["dep:axum"]
 rocket = ["dep:rocket"]
-warp = ["dep:warp"]
 viz = ["dep:viz"]
 ntex = ["dep:ntex", "dep:socket2"]
 

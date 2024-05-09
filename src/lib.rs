@@ -59,8 +59,6 @@ mod microkernel {
         pub mod salvo;
         #[cfg(feature = "viz")]
         pub mod viz;
-        #[cfg(feature = "warp")]
-        pub mod warp;
     }
 
     #[allow(dead_code)]

@@ -10,7 +10,6 @@ fn main() -> Result<(), ()> {
         "ROCKET",
         "SALVO",
         "VIZ",
-        "WARP",
     ] {
         if std::env::var(format!("CARGO_FEATURE_{}", flag)).is_ok() {
             num += 1;
@@ -19,7 +18,7 @@ fn main() -> Result<(), ()> {
 
     if num != 1 {
         let features =
-            "\"actix-web\", \"axum\", \"ntex\", \"poem\", \"rocket\", \"salvo\", \"viz\", \"warp\"";
+            "\"actix-web\", \"axum\", \"ntex\", \"poem\", \"rocket\", \"salvo\", \"viz\"";
 
         if is_zh_cn {
             eprintln!("以下feature中有且仅有一个可以被启用：{}。", features);

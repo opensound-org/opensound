@@ -57,8 +57,6 @@ impl HttpServer {
         let ignite = backends::axum::ignite;
         #[cfg(feature = "rocket")]
         let ignite = backends::rocket::ignite;
-        #[cfg(feature = "warp")]
-        let ignite = backends::warp::ignite;
         #[cfg(feature = "viz")]
         let ignite = backends::viz::ignite;
         #[cfg(feature = "ntex")]
