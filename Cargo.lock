@@ -1420,7 +1420,7 @@ dependencies = [
 [[package]]
 name = "hyper-util"
 version = "0.1.3"
-source = "git+https://github.com/hyperium/hyper-util.git?rev=a77d866ff65a68ea5d048d058108552c39ec470d#a77d866ff65a68ea5d048d058108552c39ec470d"
+source = "git+https://github.com/hyperium/hyper-util.git#4b2457362de42b14952d0f8f9935b0a75da137d9"
 dependencies = [
  "bytes",
  "futures-channel",
