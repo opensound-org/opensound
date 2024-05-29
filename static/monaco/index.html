@@ -8,10 +8,26 @@
 
 		<script src="dist/monaco-editor/min/vs/loader.js"></script>
 		<script>
+			function get_query_string(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) return unescape(r[2]); return null;
+			}
+
 			require.config({ paths: { vs: 'dist/monaco-editor/min/vs' } });
 			require(['vs/editor/editor.main'], function () {
+				var id = get_query_string("editor-id");
+				if (id == null) {
+					id = "Hello world!";
+				}
+
 				var editor = monaco.editor.create(document.getElementById('container'), {
-					value: ['fn main() {', '    println!("Hello world!");', '}', ''].join('\n'),
+					value: [
+						'fn main() {',
+						'    println!("' + id + '");',
+						'}',
+						''
+					].join('\n'),
 					language: 'rust',
 					scrollBeyondLastLine: false,
 				});
