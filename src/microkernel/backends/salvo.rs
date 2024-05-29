@@ -1,7 +1,7 @@
-use super::super::reqres::SysCtrl;
+use super::super::reqres::{EmbedStatics, SysCtrl};
 use crate::common::CommonFut;
 use futures::FutureExt;
-use salvo::prelude::*;
+use salvo::{prelude::*, serve_static::static_embed};
 use serde_json::Value;
 use std::{
     future::Future,
@@ -41,6 +41,8 @@ async fn ignite_internal(
     ctrl: Option<SysCtrl>,
     graceful_shutdown: impl Future<Output = ()> + Send + 'static,
 ) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
+    let statics = Router::with_path("statics/<**>")
+        .get(static_embed::<EmbedStatics>().defaults("index.html"));
     let mut sys = Router::with_path("api/v1/sys")
         .push(Router::with_path("hello").get(hello))
         .push(Router::with_path("version").get(version));
@@ -52,7 +54,7 @@ async fn ignite_internal(
             .push(Router::with_path("reboot").get(reboot));
     }
 
-    let router = Router::new().get(index).push(sys);
+    let router = Router::new().get(index).push(statics).push(sys);
     let acceptor = TcpListener::new((Ipv4Addr::UNSPECIFIED, port.unwrap_or(0)))
         .try_bind()
         .await?;
