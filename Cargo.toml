@@ -50,7 +50,7 @@ poem = { version = "3.0.1", optional = true }
 rocket = { version = "0.5.1", features = ["json"], optional = true }
 salvo = { version = "0.67.2", features = ["affix"], optional = true }
 socket2 = { version = "0.5.7", optional = true }
-viz = { version = "0.8.4", optional = true }
+viz = { version = "0.8.5", optional = true }
 
 [features]
 default = ["salvo"]
