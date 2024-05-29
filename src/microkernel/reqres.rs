@@ -1,5 +1,6 @@
 use crate::common::{ostp, token::token_to_gadget_id};
 use http::StatusCode;
+use rust_embed::RustEmbed;
 use serde_json::{json, Value};
 use std::{collections::HashMap, net::SocketAddr, sync::Arc};
 use tokio::{
@@ -340,6 +341,10 @@ impl FuncGateway {
         Duration::from_secs_f64(3.0)
     }
 }
+
+#[derive(RustEmbed)]
+#[folder = "statics"]
+pub struct EmbedStatics;
 
 #[derive(Debug, Clone, Copy)]
 pub struct SysEvent(bool);
