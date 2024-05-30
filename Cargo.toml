@@ -57,10 +57,10 @@ viz = { version = "0.8.5", optional = true }
 default = ["salvo"]
 salvo = ["dep:salvo"]
 poem = ["dep:poem"]
+viz = ["dep:viz"]
 actix-web = ["dep:actix-web"]
 axum = ["dep:axum"]
 rocket = ["dep:rocket"]
-viz = ["dep:viz"]
 ntex = ["dep:ntex", "dep:socket2"]
 
 [build-dependencies]

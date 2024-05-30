@@ -51,14 +51,14 @@ impl HttpServer {
         let ignite = backends::salvo::ignite;
         #[cfg(feature = "poem")]
         let ignite = backends::poem::ignite;
+        #[cfg(feature = "viz")]
+        let ignite = backends::viz::ignite;
         #[cfg(feature = "actix-web")]
         let ignite = backends::actix_web::ignite;
         #[cfg(feature = "axum")]
         let ignite = backends::axum::ignite;
         #[cfg(feature = "rocket")]
         let ignite = backends::rocket::ignite;
-        #[cfg(feature = "viz")]
-        let ignite = backends::viz::ignite;
         #[cfg(feature = "ntex")]
         let ignite = backends::ntex::ignite;
 
