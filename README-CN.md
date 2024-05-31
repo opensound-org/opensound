@@ -10,9 +10,18 @@
 
 原始作者：[@czy-29](https://github.com/czy-29)
 
-</div>
-
 最新版本：[v0.0.6](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)
+
+![MSRV (version)](https://img.shields.io/crates/msrv/opensound/0.0.6?label=v0.0.6-msrv)
+[![dependency status (version)](https://deps.rs/crate/opensound/0.0.6/status.svg)](https://deps.rs/crate/opensound/0.0.6)
+
+![MSRV (git)](https://img.shields.io/badge/git--msrv-1.75-blue)
+[![dependency status (git)](https://deps.rs/repo/github/opensound-org/opensound/status.svg)](https://deps.rs/repo/github/opensound-org/opensound)
+
+![Crates.io Total Downloads](https://img.shields.io/crates/d/opensound)
+![GitHub Repo stars](https://img.shields.io/github/stars/opensound-org/opensound)
+
+</div>
 
 ## 是什么
 OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层级的开源声音系统抽象层，或者说声音/音频引擎（当前正在开发中，且在早期开发阶段）。可适用于作为[专业音频](https://en.wikipedia.org/wiki/Professional_audio)应用（如[DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)）或其它声音相关应用的稳固后端内核。
