@@ -1,3 +1,5 @@
+<div style="text-align: center;">
+
 # opensound
 
 [English](README.md) | 简体中文
@@ -7,6 +9,8 @@
 [官网](https://opensound.run) | [crates.io](https://crates.io/crates/opensound) | [docs.rs](https://docs.rs/opensound/latest/opensound)
 
 原始作者：[@czy-29](https://github.com/czy-29)
+
+</div>
 
 最新版本：[v0.0.6](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)
 

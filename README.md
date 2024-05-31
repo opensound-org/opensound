@@ -1,3 +1,5 @@
+<div style="text-align: center;">
+
 # opensound
 
 English | [简体中文](README-CN.md)
@@ -7,6 +9,8 @@ This is the OpenSound Project's [Monorepo](https://en.wikipedia.org/wiki/Monorep
 [Website](https://opensound.run) | [crates.io](https://crates.io/crates/opensound) | [docs.rs](https://docs.rs/opensound/latest/opensound)
 
 Original Author: [@czy-29](https://github.com/czy-29)
+
+</div>
 
 Latest version: [v0.0.6](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)
 
