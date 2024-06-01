@@ -13,10 +13,10 @@ Original Author: [@czy-29](https://github.com/czy-29)
 Latest version: [v0.0.6](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)
 
 ![MSRV (version)](https://img.shields.io/crates/msrv/opensound/0.0.6?label=v0.0.6-msrv)
-[![dependency status (version)](https://deps.rs/crate/opensound/0.0.6/status.svg)](https://deps.rs/crate/opensound/0.0.6)
+[![dependency status (version)](https://deps.rs/crate/opensound/0.0.6/status.svg?compact=true)](https://deps.rs/crate/opensound/0.0.6)
 
 ![MSRV (git)](https://img.shields.io/badge/git--msrv-1.75-blue)
-[![dependency status (git)](https://deps.rs/repo/github/opensound-org/opensound/status.svg)](https://deps.rs/repo/github/opensound-org/opensound)
+[![dependency status (git)](https://deps.rs/repo/github/opensound-org/opensound/status.svg?compact=true)](https://deps.rs/repo/github/opensound-org/opensound)
 
 ![Crates.io Total Downloads](https://img.shields.io/crates/d/opensound)
 ![GitHub Repo stars](https://img.shields.io/github/stars/opensound-org/opensound)
