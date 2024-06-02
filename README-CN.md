@@ -34,7 +34,7 @@ OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层�
 - 一个（使用以上两者构建的）可定制的Web API Server
 - 一个内置的Web GUI Playground
 
-核心Rust API更像是一些模块化的“积木”，而高一级的应用框架则是可以让你以一种插件化的架构，轻松地将积木“拼装”成一个完整的应用。而Web API Server本身不但可以直接用于声音应用的开发，而且也是可以作为以上两个部分用法的一个很好的示例。
+核心Rust API更像是一些模块化的“积木”，而高一级的应用框架则是可以让你以一种插件化的架构，轻松而优雅地将积木“拼装”成一个完整的应用。而Web API Server本身不但可以直接用于声音应用的开发，而且也是可以作为以上两个部分用法的一个很好的示例。
 
 而内置的Web GUI Playground将主要用于探索&测试&[Live Coding](https://en.wikipedia.org/wiki/Live_coding)用途（它的形态会比较像[JUCE](https://juce.com/)的DemoRunner和AudioPluginHost，以及本项目的一些特色功能的结合体），但是当然，您也可以用它来进行编曲/音乐制作，只是如果您仅使用Playground的交互前端的话，您的工作流将会比较繁杂（比如Playground可能并不会有一个完整的钢琴卷帘）。与此同时，尽管自带的Web GUI Playground前端不是一个完整的DAW体验，但是背后的Web API Server应当可用于作为一个DAW的完整后端。
 

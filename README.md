@@ -34,7 +34,7 @@ OpenSound is a (currently WIP and in early development stage) OpenSource One-Sto
 - A customizable Web API Server (built using both of the above)
 - A bundled Web GUI Playground
 
-The Core Rust API is more like modular "building blocks", while the higher-level application framework allows you to easily "assemble" building blocks into a complete application with a plugin-like architecture. And the Web API Server itself can not only be directly used for the development of sound applications, but also serve as a good example of the usage of the above two parts.
+The Core Rust API is more like modular "building blocks", while the higher-level application framework allows you to easily and gracefully "assemble" the building blocks into a complete application with a plugin-like architecture. And the Web API Server itself can not only be directly used for the development of sound applications, but also serve as a good example of the usage of the above two parts.
 
 And the Web GUI Playground is mainly for Exploring & Testing & [Live Coding](https://en.wikipedia.org/wiki/Live_coding) purpose (its form will resemble the combination of [JUCE](https://juce.com/)'s DemoRunner and AudioPluginHost, as well as some of the unique features of this project), but of course, you can use it for music arrangement/production, it's just that the workflow can be quite cumbersome if you use just the playground frontend(e.g. this playground may not have a complete piano roll). At the same time, although the built-in Web GUI Playground front-end is not a complete DAW experience, the underlying Web API Server should be available as a complete backend for a DAW.
 
