@@ -1717,16 +1717,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mime_guess"
-version = "2.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4192263c238a5f0d0c6bfd21f336a313a4ce1c450542449ca191bb657b4642ef"
-dependencies = [
- "mime",
- "unicase",
-]
-
-[[package]]
 name = "miniz_oxide"
 version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2355,18 +2345,17 @@ checksum = "d231b230927b5e4ad203db57bbcbee2802f6bce620b1e4a9024a07d94e2907ec"
 [[package]]
 name = "poem"
 version = "3.0.1"
-source = "git+https://github.com/opensound-org/poem.git#f8033ca2c61f90252149b9732a1ea0ba1e430298"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e88b6912ed1e8833d7c22c9c986c517f4518d7d37e3c04566d917c789aaea591"
 dependencies = [
  "bytes",
  "futures-util",
  "headers",
- "hex",
  "http 1.1.0",
  "http-body-util",
  "hyper 1.3.1",
  "hyper-util",
  "mime",
- "mime_guess",
  "nix 0.28.0",
  "parking_lot",
  "percent-encoding",
@@ -2374,7 +2363,6 @@ dependencies = [
  "poem-derive",
  "regex",
  "rfc7239",
- "rust-embed",
  "serde",
  "serde_json",
  "serde_urlencoded",
@@ -2390,7 +2378,8 @@ dependencies = [
 [[package]]
 name = "poem-derive"
 version = "3.0.0"
-source = "git+https://github.com/opensound-org/poem.git#f8033ca2c61f90252149b9732a1ea0ba1e430298"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c2b961d58a6c53380c20236394381d9292fda03577f902b158f1638932964dcf"
 dependencies = [
  "proc-macro-crate",
  "proc-macro2",
