@@ -1,8 +1,7 @@
-use super::super::reqres::{EmbedStatics, SysCtrl};
+use super::super::reqres::SysCtrl;
 use crate::common::CommonFut;
 use futures::FutureExt;
 use poem::{
-    endpoint::EmbeddedFilesEndpoint,
     get, handler,
     listener::{Acceptor, Listener, TcpListener},
     web::{Data, Json},
@@ -49,10 +48,6 @@ async fn ignite_internal(
 ) -> Result<(SocketAddr, CommonFut), anyhow::Error> {
     let mut route = Route::new()
         .at("/", get(index))
-        .nest(
-            "/statics",
-            get(EmbeddedFilesEndpoint::<EmbedStatics>::new()),
-        )
         .at("/api/v1/sys/hello", get(hello))
         .at("/api/v1/sys/version", get(version));
 
