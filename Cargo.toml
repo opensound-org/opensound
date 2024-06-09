@@ -49,7 +49,7 @@ axum = { version = "0.7.5", optional = true }
 ntex = { version = "2.0.1", features = ["tokio"], optional = true }
 poem = { version = "3.0.1", optional = true }
 rocket = { version = "0.5.1", features = ["json"], optional = true }
-salvo = { version = "0.68.0", features = ["affix", "serve-static"], optional = true }
+salvo = { version = "0.68.1", features = ["affix", "serve-static"], optional = true }
 socket2 = { version = "0.5.7", optional = true }
 viz = { version = "0.8.5", optional = true }
 
