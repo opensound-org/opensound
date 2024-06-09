@@ -30,7 +30,7 @@ OpenSound是使用[Rust](https://www.rust-lang.org/)开发的，一站式多层�
 
 1.0将会是我们的[MVP](https://en.wikipedia.org/wiki/Minimum_viable_product)版本，它会包含：
 - 模块化的核心Rust API
-- 一个高层级的插件化应用框架
+- 一个插件化的桌面应用开发框架
 - 一个（使用以上两者构建的）可定制的Web API Server
 - 一个内置的Web GUI Playground
 
@@ -48,7 +48,8 @@ v0.1之前还会有若干个v0.0.x版本，每实现一个小功能都会bump一
 - 移动端支持（1.0将仅会支持桌面平台）
 - WASM支持
 - OpenSound原生Playground（使用Flutter & opensound的C API）
-- 游戏音频功能，以及游戏引擎（如Unity/Unreal/Godot）集成
+- 音频插件开发框架（如VST/VST3/AU/CLAP）
+- 游戏音频功能，音频引擎（如Wwise/FMod）插件开发，以及游戏引擎（如Unity/Unreal/Godot）集成
 - （或许）嵌入式设备支持
 
 ## 词源学

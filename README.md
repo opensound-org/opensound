@@ -30,7 +30,7 @@ OpenSound is a (currently WIP and in early development stage) OpenSource One-Sto
 
 1.0 will be our [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product) version, and it will consist of:
 - The Modular Core Rust API
-- A High-Level Plugin-Based Application Framework
+- A plugin based desktop application development framework
 - A customizable Web API Server (built using both of the above)
 - A bundled Web GUI Playground
 
@@ -48,7 +48,8 @@ In the future(after MVP), our roadmap will be:
 - Mobile support(1.0 will only support desktop platforms)
 - WASM support
 - OpenSound Native Playground(using Flutter & opensound's C API)
-- Game Audio functionalities & Game Engines(like Unity/Unreal/Godot) integration
+- Audio plugin development framework (like VST/VST3/AU/CLAP)
+- Game Audio functionalities & Audio engine (like Wwise/FMod) plugin development & Game Engines(like Unity/Unreal/Godot) integration
 - (Maybe) Embedded device support
 
 ## Etymology
