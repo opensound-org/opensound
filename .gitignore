@@ -11,3 +11,6 @@
 
 # Fuck macOS
 .DS_Store
+
+# For RustRover
+.idea
