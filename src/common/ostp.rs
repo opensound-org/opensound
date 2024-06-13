@@ -298,8 +298,10 @@ use tracing_subscriber::fmt::{format::FmtSpan, time::ChronoLocal};
 
 #[cfg(debug_assertions)]
 pub fn install_default() {
+    #[cfg(windows)]
+    nu_ansi_term::enable_ansi_support().ok();
+
     tracing_subscriber::fmt()
-        .with_ansi(false)
         .with_timer(ChronoLocal::new("%m-%d %H:%M:%S".into()))
         .with_max_level(tracing::Level::DEBUG)
         .with_span_events(FmtSpan::FULL)
@@ -309,8 +311,10 @@ pub fn install_default() {
 
 #[cfg(not(debug_assertions))]
 pub fn install_default() {
+    #[cfg(windows)]
+    nu_ansi_term::enable_ansi_support().ok();
+
     tracing_subscriber::fmt()
-        .with_ansi(false)
         .with_timer(ChronoLocal::new("%m-%d %H:%M:%S".into()))
         .with_span_events(FmtSpan::FULL)
         .with_thread_names(true)
