@@ -13,7 +13,7 @@
 最新版本：[v0.0.6](https://github.com/opensound-org/opensound/releases/tag/v0.0.6)
 
 ![Crates.io Total Downloads](https://img.shields.io/crates/d/opensound)
-![Crates.io Dependents](https://img.shields.io/crates/dependents/opensound?link=https%3A%2F%2Fcrates.io%2Fcrates%2Fopensound%2Freverse_dependencies)
+[![Crates.io Dependents](https://img.shields.io/crates/dependents/opensound)](https://crates.io/crates/opensound/reverse_dependencies)
 ![GitHub Repo stars](https://img.shields.io/github/stars/opensound-org/opensound)
 
 ![MSRV (version)](https://img.shields.io/crates/msrv/opensound/0.0.6?label=v0.0.6-msrv)
@@ -22,7 +22,7 @@
 ![MSRV (git)](https://img.shields.io/badge/git--msrv-1.76-blue)
 [![dependency status (git)](https://deps.rs/repo/github/opensound-org/opensound/status.svg?subject=git-deps)](https://deps.rs/repo/github/opensound-org/opensound)
 
-![Static Badge](https://img.shields.io/badge/build_with-Rust_1.81.0-dca282?link=https%3A%2F%2Fblog.rust-lang.org%2F2024%2F09%2F05%2FRust-1.81.0.html)
+[![Static Badge](https://img.shields.io/badge/build_with-Rust_1.81.0-dca282)](https://blog.rust-lang.org/2024/09/05/Rust-1.81.0.html)
 
 </div>
 
