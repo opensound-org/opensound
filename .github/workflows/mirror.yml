@@ -1,0 +1,21 @@
+on: [push, workflow_dispatch]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - uses: yesolutions/mirror-action@master
+      with:
+        REMOTE: 'https://gitlab.com/opensound-org/opensound.git'
+        REMOTE_NAME: gitlab
+        GIT_USERNAME: czy29
+        GIT_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
+    - uses: yesolutions/mirror-action@master
+      with:
+        REMOTE: 'https://gitee.com/opensound-org/opensound.git'
+        REMOTE_NAME: gitee
+        GIT_USERNAME: czy29
+        GIT_PASSWORD: ${{ secrets.GITEE_PASSWORD }}
