@@ -145,5 +145,5 @@ cargo add opensound
 [GitLab](https://gitlab.com/opensound-org/opensound)版本上面的合并请求是欢迎的！
 
 除非您另有明确说明，否则您有意提交的
-包含在 opensound 中的任何贡献（如 Apache-2.0 许可证中所定义）均应
+包含在 `opensound` 中的任何贡献（如 Apache-2.0 许可证中所定义）均应
 获得上述双重许可，无需任何附加条款或条件。
