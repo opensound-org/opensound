@@ -92,7 +92,7 @@ cargo add opensound
 本项目的版本发布没有固定的周期，但是版本号会遵循[SemVer](https://semver.org/lang/zh-CN/)：在v0.1之后，每个修订版本会仅包含bug修复，而每个小版本会包含小的功能更新，而每个大版本则会包含重大功能更新（但是在没有达到v0.1 PoC的目标之前，所有的小功能更新都只会增加版本号的最后一位，也就是修订版本）。
 
 ## Rust版本策略
-作为官方，我们始终使用最新稳定版的Rust（当前是1.78.0）来构建和测试本项目。但是任何高于[Cargo.toml](Cargo.toml)中指定的[MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field)（当前是1.76.0，因为依赖项中MSRV最高的“[salvo](https://crates.io/crates/salvo)”的MSRV是1.76.0）的Rust版本，均应正常构建，但是行为是否正确，官方不予保证。
+作为官方，我们始终使用最新稳定版的Rust（当前是1.81.0）来构建和测试本项目。但是任何高于[Cargo.toml](Cargo.toml)中指定的[MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field)（当前是1.76.0，因为依赖项中MSRV最高的“[salvo](https://crates.io/crates/salvo)”的MSRV是1.76.0）的Rust版本，均应正常构建，但是行为是否正确，官方不予保证。
 
 如果您使用低于最新稳定版的Rust构建本项目后，遇到一些问题，请先尝试升级到最新稳定版的Rust之后，再来看看问题是否依然存在。如果问题依然存在，请到[GitLab](https://gitlab.com/opensound-org/opensound/-/issues)或[Github](https://github.com/opensound-org/opensound/issues)发起issue。
 
