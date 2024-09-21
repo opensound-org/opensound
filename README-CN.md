@@ -142,7 +142,11 @@ cargo add opensound
 
 [Github](https://github.com/opensound-org/opensound)是我们的[单一信源](https://en.wikipedia.org/wiki/Single_source_of_truth)，这里我们欢迎所有的issue和pull request。
 
-我们另有两个[自动推送](.github/workflows/mirror.yml)的下游只读镜像：[GitLab](https://gitlab.com/opensound-org/opensound)和[Gitee](https://gitee.com/opensound-org/opensound)。由于它们是只读镜像，因此请不要在这两个平台上发起任何合并请求或pull request。
+我们另有两个[自动推送](.github/workflows/mirror.yml)的下游只读镜像：
+- [GitLab](https://gitlab.com/opensound-org/opensound)
+- [Gitee](https://gitee.com/opensound-org/opensound)
+
+由于它们是只读镜像，因此请不要在这两个平台上发起任何合并请求或pull request。
 
 除非您另有明确说明，否则您有意提交的
 包含在 `opensound` 中的任何贡献（如 Apache-2.0 许可证中所定义）均应
