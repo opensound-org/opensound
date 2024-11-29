@@ -127,6 +127,10 @@ The "[dev-notes](dev-notes/en/)" directory is a good starting point from which y
 3. In order to maximize the adoption of this project, we will wrap a Web API Server at the earliest stage, allowing any developer who is not using Rust to call this project in their own language even before the C API is exposed -- as long as your language can send HTTP/WebSocket requests. This also forms a front-end/back-end "process isolation" architecture, so that anyone can develop their own front-end using any framework, making it easy to develop custom frontends.
 4. I am also a semi-professional musician myself. In the process of arranging my own music, I discovered many features that I hoped to have, but none of them are available in the current DAWs. This is also the reason why I ultimately decided to write my own DAW. And many features will be implemented on this open-source core, which means that this project will have a lot of innovative audio features. So stay tuned!
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=opensound-org/opensound&type=Date)](https://star-history.com/#opensound-org/opensound&Date)
+
 # License
 
 This project is licensed under either of

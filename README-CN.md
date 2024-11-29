@@ -127,6 +127,10 @@ cargo add opensound
 3. 为了最大化本项目的采用率，我们将在最早期就封装一个Web API Server，允许哪怕不使用Rust的任何开发者，甚至在C API暴露之前就可以使用自己的语言调用本项目——只需要您的语言可以发送HTTP/WebSocket请求。这也形成了一种前后端“进程隔离”的架构，允许任何人使用任何框架来开发自己的前端，使得开发自定义前端变得更容易。
 4. 我自己本身也是一名半职业音乐人。在给自己的音乐编曲的过程中，我发现了很多我希望拥有，但当前市面上的DAW都没有的功能，这也是我最终决定开发一个自己的DAW的其中一个原因。而且很多这些功能我都会实现在这个开源核心上，这就意味着本项目将会有很多创新的音频功能。所以敬请期待！
 
+## Star历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=opensound-org/opensound&type=Date)](https://star-history.com/#opensound-org/opensound&Date)
+
 # 许可证
 
 本项目使用以下两种许可之一
