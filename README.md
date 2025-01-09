@@ -22,7 +22,7 @@ Latest version: [v0.0.6](https://github.com/opensound-org/opensound/releases/tag
 ![MSRV (git)](https://img.shields.io/badge/git--msrv-1.76.0-blue)
 [![dependency status (git)](https://deps.rs/repo/github/opensound-org/opensound/status.svg?subject=git-deps)](https://deps.rs/repo/github/opensound-org/opensound)
 
-[![Static Badge](https://img.shields.io/badge/build_with-Rust_1.81.0-dca282)](https://blog.rust-lang.org/2024/09/05/Rust-1.81.0.html)
+[![Static Badge](https://img.shields.io/badge/build_with-Rust_1.84.0-dca282)](https://blog.rust-lang.org/2024/09/05/Rust-1.84.0.html)
 
 </div>
 
@@ -92,7 +92,7 @@ This project adopts a "[centralized workflow](https://git-scm.com/book/en/v2/Dis
 The version release of this project does not have a fixed cycle, but the version number will follow [SemVer](https://semver.org/): after v0.1, each revised version will only contain bug fixes, each minor version will contain minor feature updates, and each major version will contain major feature updates (but before reaching the goal of v0.1 PoC, all small feature updates will only increase the last digit of the version number, which is the revision).
 
 ## Rust Version Policy
-As an official, we always use the latest stable version of Rust (currently 1.81.0) to build and test this project. However, any version of Rust that is higher than the [MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field) specified in [Cargo.toml](Cargo.toml) (currently 1.76.0, as the MSRV of "[salvo](https://crates.io/crates/salvo)" with the highest MSRV among dependencies is 1.76.0) should be built normally, but the official does not guarantee the correctness of the behavior.
+As an official, we always use the latest stable version of Rust (currently 1.84.0) to build and test this project. However, any version of Rust that is higher than the [MSRV](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-rust-version-field) specified in [Cargo.toml](Cargo.toml) (currently 1.76.0, as the MSRV of "[salvo](https://crates.io/crates/salvo)" with the highest MSRV among dependencies is 1.76.0) should be built normally, but the official does not guarantee the correctness of the behavior.
 
 If you encounter some problems after building this project using a version of Rust that is lower than the latest stable version, please try upgrading to the latest stable version of Rust first and then see if the problem still exists. If the problem persists, please initiate an issue at [GitLab](https://gitlab.com/opensound-org/opensound/-/issues) or [Github](https://github.com/opensound-org/opensound/issues).
 
