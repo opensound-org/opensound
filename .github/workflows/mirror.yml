@@ -9,10 +9,10 @@ jobs:
         fetch-depth: 0
     - uses: yesolutions/mirror-action@master
       with:
-        REMOTE: 'https://gitlab.com/opensound-org/opensound.git'
-        REMOTE_NAME: gitlab
-        GIT_USERNAME: czy29
-        GIT_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
+        REMOTE: 'https://gitea.29bot.com/opensound-org/opensound.git'
+        REMOTE_NAME: gitea
+        GIT_USERNAME: 29bot
+        GIT_PASSWORD: ${{ secrets.GITEA_PASSWORD }}
     - uses: yesolutions/mirror-action@master
       with:
         REMOTE: 'https://gitee.com/opensound-org/opensound.git'
